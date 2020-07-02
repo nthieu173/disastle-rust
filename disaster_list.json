@@ -1,0 +1,179 @@
+[
+  {
+    "disaster_name": "Nuclear Meltdown",
+    "diamond_damage": [
+      0,
+      1
+    ],
+    "cross_damage": [
+      0,
+      1
+    ],
+    "moon_damage": [
+      2,
+      0
+    ]
+  },
+  {
+    "disaster_name": "Nebula Drake",
+    "diamond_damage": [
+      0,
+      1
+    ],
+    "cross_damage": [
+      2,
+      0
+    ],
+    "moon_damage": [
+      0,
+      1
+    ]
+  },
+  {
+    "disaster_name": "Gas Explosion",
+    "diamond_damage": [
+      1,
+      1
+    ],
+    "cross_damage": [
+      0,
+      1
+    ],
+    "moon_damage": [
+      1,
+      0
+    ]
+  },
+  {
+    "disaster_name": "Meteor",
+    "diamond_damage": [
+      1,
+      1
+    ],
+    "cross_damage": [
+      1,
+      0
+    ],
+    "moon_damage": [
+      0,
+      1
+    ]
+  },
+  {
+    "disaster_name": "Magmaquake",
+    "diamond_damage": [
+      0,
+      1
+    ],
+    "cross_damage": [
+      1,
+      0
+    ],
+    "moon_damage": [
+      1,
+      1
+    ]
+  },
+  {
+    "disaster_name": "Entropy Demon",
+    "diamond_damage": [
+      0,
+      1
+    ],
+    "cross_damage": [
+      1,
+      1
+    ],
+    "moon_damage": "2"
+  },
+  {
+    "disaster_name": "Verdant Chaos",
+    "diamond_damage": [
+      1,
+      0
+    ],
+    "cross_damage": [
+      0,
+      1
+    ],
+    "moon_damage": [
+      1,
+      1
+    ]
+  },
+  {
+    "disaster_name": "Aurora Whale",
+    "diamond_damage": [
+      1,
+      1
+    ],
+    "cross_damage": [
+      0,
+      0
+    ],
+    "moon_damage": [
+      1,
+      1
+    ]
+  },
+  {
+    "disaster_name": "Space Bees",
+    "diamond_damage": [
+      1,
+      0
+    ],
+    "cross_damage": [
+      1,
+      1
+    ],
+    "moon_damage": [
+      0,
+      1
+    ]
+  },
+  {
+    "disaster_name": "Aurora Veil",
+    "diamond_damage": [
+      2,
+      0
+    ],
+    "cross_damage": [
+      0,
+      1
+    ],
+    "moon_damage": [
+      0,
+      1
+    ]
+  },
+  {
+    "disaster_name": "Warp Storm",
+    "diamond_damage": [
+      0,
+      0
+    ],
+    "cross_damage": [
+      1,
+      1
+    ],
+    "moon_damage": [
+      1,
+      1
+    ]
+  },
+  {
+    "disaster_name": "Ionic Tornado",
+    "diamond_damage": [
+      1,
+      1
+    ],
+    "cross_damage": [
+      1,
+      1
+    ],
+    "moon_damage": [
+      0,
+      0
+    ]
+  }
+]
