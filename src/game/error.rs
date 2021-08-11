@@ -1,4 +1,4 @@
-use crate::castle::CastleError;
+use disastle_castle_rust::CastleError;
 use std::{error::Error, fmt};
 
 #[derive(Debug)]

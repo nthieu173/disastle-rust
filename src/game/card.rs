@@ -1,7 +1,7 @@
-mod crate::castle::room::Room;
-mod crate::disaster::Disaster;
+use disastle_castle_rust::Room;
+use crate::disaster::Disaster;
 
 pub enum Card {
-    Room(Room),
-    Disaster(Disaster),
+    Room(Box<dyn Room>),
+    Disaster(Box<dyn Disaster>),
 }
