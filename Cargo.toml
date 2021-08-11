@@ -7,6 +7,6 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-disastle-castle-rust = { path = "../disastle-castle-rust"}
+disastle-castle-rust = { git = "https://github.com/nthieu173/disastle-castle-rust.git"}
 rand = {version="0.8", features=["alloc"]}
 nanoid = "0.4"
