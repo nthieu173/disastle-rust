@@ -1,8 +1,8 @@
 use disastle_castle_rust::Pos;
 
-enum Action {
-    Place(index: usize),
+pub enum Action {
+    Place(usize, Pos),
     Move(Pos, Pos),
     Swap(Pos, Pos),
-    Discard()
+    Discard(Pos)
 }

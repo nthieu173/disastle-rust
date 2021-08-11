@@ -1,15 +1,17 @@
 mod error;
 
 pub use error::GameError;
+mod action;
 mod card;
 mod player;
 
-use player::PlayerInfo;
+pub use action::Action;
 use card::Card;
+use player::PlayerInfo;
 use disastle_castle_rust::{Castle, Room, Pos};
 use crate::disaster::Disaster;
 
-use rand::{rngs::ThreadRng, seq::SliceRandom};
+use rand::{rngs::ThreadRng, seq::SliceRandom, prelude::IteratorRandom};
 
 use std::{
     collections::{HashMap},
@@ -21,6 +23,7 @@ type Result<T> = result::Result<T, GameError>;
 
 pub struct GameState {
     pub players: HashMap<String, PlayerInfo>,
+    pub castles: HashMap<String, Castle>,
     pub shop: Vec<Box<dyn Room>>,
     pub discard: Vec<Box<dyn Room>>,
     pub previous_disasters: Vec<Box<dyn Disaster>>,
@@ -47,6 +50,7 @@ impl GameState {
         let mut thrones = Vec::new();
         let mut deck = Vec::new();
         let mut disasters = Vec::new();
+        let mut rng = rand::thread_rng();
         for card in cards {
             match card {
                 Card::Room(room) => {
@@ -59,7 +63,13 @@ impl GameState {
                 Card::Disaster(disaster) => disasters.push(disaster),
             }
         }
-        let mut rng = rand::thread_rng();
+        let mut thrones: Vec<Box<dyn Room>> = thrones.into_iter().choose_multiple(&mut rng, players.len());
+        let mut castles = HashMap::new();
+        for secret in players.keys() {
+            let room = thrones.pop().unwrap();
+            castles.insert(secret.clone(), Castle::new(room));
+        }
+
         disasters.shuffle(&mut rng);
         disasters.truncate(setting.num_disasters as usize);
         let mut card_disaster = Vec::new();
@@ -94,6 +104,7 @@ impl GameState {
         turn_order.shuffle(&mut rng);
         GameState {
             players,
+            castles,
             shop,
             discard: Vec::new(),
             previous_disasters: Vec::new(),
@@ -102,6 +113,28 @@ impl GameState {
             turn_index: 0,
             rng,
             setting
+        }
+    }
+    pub fn action(&mut self, player_secret: &str, action: Action) -> Result<()> {
+        if let Some(castle) = self.castles.get_mut(player_secret) {
+            match action {
+                Action::Place(index, pos) => {
+                    let room = self.shop.remove(index);
+                    Ok(castle.place_room(room, pos)?)
+                },
+                Action::Move(from, to) => {
+                    Ok(castle.move_room(from, to)?)
+                },
+                Action::Swap(pos1, pos2) => {
+                    Ok(castle.swap_room(pos1, pos2)?)
+                },
+                Action::Discard(pos) => {
+                    self.discard.push(castle.discard_room(pos)?);
+                    Ok(())
+                }
+            }
+        } else {
+            Err(GameError::InvalidPlayer)
         }
     }
 }

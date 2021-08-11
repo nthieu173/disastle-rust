@@ -23,7 +23,7 @@ impl fmt::Display for GameError {
         match self {
             GameError::FullPlayers => write!(f, "full players error"),
             GameError::InvalidAction => write!(f, "invalid action error"),
-            GameError::InvalidPlayer => write!(f, "invalid player error"),
+            GameError::InvalidPlayer => write!(f, "There is no player with matching secret in game."),
             GameError::InvalidDisaster => write!(f, "invalid disaster error"),
             GameError::InvalidShopIndex => write!(f, "invalid shop index error"),
             GameError::InvalidRoomIndex => write!(f, "invalid room index error"),
