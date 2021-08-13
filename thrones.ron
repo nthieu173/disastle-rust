@@ -1,0 +1,62 @@
+[
+    SimpleRoom(
+        thone: true,
+        name: "Throne Room (White)",
+        rotation: 0,
+        connections: [Any, Any, Any, Any]
+    ),
+    SimpleRoom(
+        thone: true,
+        name: "Throne Room (Green)",
+        rotation: 0,
+        connections: [Any, Any, Any, Any]
+    ),
+    SimpleRoom(
+        thone: true,
+        name: "Throne Room (Purple)",
+        rotation: 0,
+        connections: [Any, Any, Any, Any]
+    ),
+    SimpleRoom(
+        thone: true,
+        name: "Throne Room (Red)",
+        rotation: 0,
+        connections: [Any, Any, Any, Any]
+    ),
+    SimpleRoom(
+        thone: true,
+        name: "Throne Room (Turquoise)",
+        rotation: 0,
+        connections: [Any, Any, Any, Any]
+    ),
+    SimpleRoom(
+        thone: true,
+        name: "Throne Room (Pink)",
+        rotation: 0,
+        connections: [Any, Any, Any, Any]
+    ),
+    SimpleRoom(
+        thone: true,
+        name: "Throne Room (Orange)",
+        rotation: 0,
+        connections: [Any, Any, Any, Any]
+    ),
+    SimpleRoom(
+        thone: true,
+        name: "Throne Room (Black)",
+        rotation: 0,
+        connections: [Any, Any, Any, Any]
+    ),
+    SimpleRoom(
+        thone: true,
+        name: "Throne Room (Yellow)",
+        rotation: 0,
+        connections: [Any, Any, Any, Any]
+    ),
+    SimpleRoom(
+        thone: true,
+        name: "Throne Room (Blue)",
+        rotation: 0,
+        connections: [Any, Any, Any, Any]
+    ),
+]

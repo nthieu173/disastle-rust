@@ -1,0 +1,702 @@
+[
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Hallway",
+        rotation: 0,
+        connections: [None, Cross, None, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Hallway",
+        rotation: 0,
+        connections: [None, Moon, None, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Hallway",
+        rotation: 0,
+        connections: [None, Cross, None, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Hallway",
+        rotation: 0,
+        connections: [None, Moon, None, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Hallway",
+        rotation: 0,
+        connections: [None, Moon, None, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Hallway",
+        rotation: 0,
+        connections: [None, Diamond, None, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Hallway",
+        rotation: 0,
+        connections: [None, Moon, None, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Staircase",
+        rotation: 0,
+        connections: [Cross, None, Moon, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Staircase",
+        rotation: 0,
+        connections: [Diamond, None, Moon, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Staircase",
+        rotation: 0,
+        connections: [Cross, None, Diamond, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Staircase",
+        rotation: 0,
+        connections: [Cross, None, Cross, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Staircase",
+        rotation: 0,
+        connections: [Moon, None, Moon, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Staircase",
+        rotation: 0,
+        connections: [Moon, None, Cross, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Staircase",
+        rotation: 0,
+        connections: [Moon, None, Diamond, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Corridor",
+        rotation: 0,
+        connections: [None, None, Diamond, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Corridor",
+        rotation: 0,
+        connections: [Cross, Diamond, None, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Corridor",
+        rotation: 0,
+        connections: [Cross, None, None, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Corridor",
+        rotation: 0,
+        connections: [None, None, Cross, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Corridor",
+        rotation: 0,
+        connections: [None, Diamond, Moon, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Corridor",
+        rotation: 0,
+        connections: [Cross, None, None, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Black Market",
+        rotation: 0,
+        connections: [Diamond, Diamond, None, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Divination Chamber",
+        rotation: 0,
+        connections: [None, None, Cross, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Merchants Guild",
+        rotation: 0,
+        connections: [None, Diamond, Diamond, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Wormhole Generator",
+        rotation: 0,
+        connections: [Moon, Diamond, Moon, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Doomsayer",
+        rotation: 0,
+        connections: [Moon, None, Moon, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Antigravity Cannon",
+        rotation: 0,
+        connections: [Cross, None, Moon, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Time Machine",
+        rotation: 0,
+        connections: [Diamond, None, None, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Soothsayer",
+        rotation: 0,
+        connections: [Diamond, Cross, None, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Architect",
+        rotation: 0,
+        connections: [None, Cross, None, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Interior Decorator",
+        rotation: 0,
+        connections: [None, None, Moon, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Treasury",
+        rotation: 0,
+        connections: [Moon, Diamond, Cross, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Market",
+        rotation: 0,
+        connections: [Diamond, Cross, Moon, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Energy Core",
+        rotation: 0,
+        connections: [Moon, Moon, Diamond, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Gravity Generator",
+        rotation: 0,
+        connections: [Moon, Cross, Cross, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Reinforced Walls",
+        rotation: 0,
+        connections: [Moon, Cross, Cross, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Gravitational Anchor",
+        rotation: 0,
+        connections: [None, Diamond, None, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Tavern",
+        rotation: 0,
+        connections: [Diamond, None, Diamond, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Echo Chamber",
+        rotation: 0,
+        connections: [Diamond, Diamond, Cross, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Armorer",
+        rotation: 0,
+        connections: [None, Cross, None, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Generator",
+        rotation: 0,
+        connections: [None, None, Moon, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Generator",
+        rotation: 0,
+        connections: [None, Cross, None, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Safe Room",
+        rotation: 0,
+        connections: [Diamond, Cross, Moon, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Bunker",
+        rotation: 0,
+        connections: [Diamond, Cross, Diamond, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Rooms With Legs",
+        rotation: 0,
+        connections: [Moon, Diamond, None, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Spinning Chamber",
+        rotation: 0,
+        connections: [Diamond, Cross, Moon, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Warping Chamber",
+        rotation: 0,
+        connections: [None, Diamond, Cross, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Imposter",
+        rotation: 0,
+        connections: [None, None, Moon, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Commander's Chamber",
+        rotation: 0,
+        connections: [Cross, Diamond, Cross, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Engineers Workshop",
+        rotation: 0,
+        connections: [None, Moon, Cross, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Pilot's Quarter",
+        rotation: 0,
+        connections: [Moon, Moon, None, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Candy Shop",
+        rotation: 0,
+        connections: [Moon, None, None, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Swimming Pool",
+        rotation: 0,
+        connections: [None, Diamond, Cross, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Petting Zoo",
+        rotation: 0,
+        connections: [Diamond, Moon, None, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Movie Theatre",
+        rotation: 0,
+        connections: [None, None, Cross, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Nuclear Reactor",
+        rotation: 0,
+        connections: [None, Diamond, None, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Mercenery",
+        rotation: 0,
+        connections: [None, Diamond, Cross, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Mercenery",
+        rotation: 0,
+        connections: [Cross, None, Cross, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Mercenery",
+        rotation: 0,
+        connections: [Moon, None, None, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Mercenery",
+        rotation: 0,
+        connections: [None, Diamond, None, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Giant Fan",
+        rotation: 0,
+        connections: [Diamond, Moon, None, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Giant Fan",
+        rotation: 0,
+        connections: [Diamond, Cross, Diamond, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Construction Crew",
+        rotation: 0,
+        connections: [Cross, Moon, Cross, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Rocket Engineer",
+        rotation: 0,
+        connections: [Moon, None, None, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Rocket Engineer",
+        rotation: 0,
+        connections: [None, Diamond, Diamond, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Shuttle",
+        rotation: 0,
+        connections: [Moon, Moon, None, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Shuttle",
+        rotation: 0,
+        connections: [None, None, Moon, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Warp Cannon",
+        rotation: 0,
+        connections: [None, Moon, None, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Warp Cannon",
+        rotation: 0,
+        connections: [Diamond, None, Diamond, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Warp Cannon",
+        rotation: 0,
+        connections: [None, None, Moon, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Hydraulic Arm",
+        rotation: 0,
+        connections: [None, Diamond, Diamond, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Hydraulic Arm",
+        rotation: 0,
+        connections: [Diamond, None, None, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Watch Tower",
+        rotation: 0,
+        connections: [Moon, None, Diamond, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Homeowners Association",
+        rotation: 0,
+        connections: [Cross, Diamond, Cross, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Unhappy Neighbor",
+        rotation: 0,
+        connections: [None, Moon, Cross, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Disco",
+        rotation: 0,
+        connections: [Cross, Cross, Diamond, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 3,
+        name: "Big Vault",
+        rotation: 0,
+        connections: [None, Cross, Moon, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 3,
+        name: "Big Vault",
+        rotation: 0,
+        connections: [Diamond, Cross, None, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 3,
+        name: "Big Vault",
+        rotation: 0,
+        connections: [Diamond, None, Moon, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 3,
+        name: "Big Vault",
+        rotation: 0,
+        connections: [Cross, Moon, Diamond, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 5,
+        name: "Large Vault",
+        rotation: 0,
+        connections: [Moon, Moon, Moon, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 5,
+        name: "Large Vault",
+        rotation: 0,
+        connections: [Cross, Moon, Diamond, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 2,
+        name: "Medium Vault",
+        rotation: 0,
+        connections: [None, None, Diamond, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 2,
+        name: "Medium Vault",
+        rotation: 0,
+        connections: [None, Cross, Moon, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 2,
+        name: "Medium Vault",
+        rotation: 0,
+        connections: [Diamond, None, Diamond, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 2,
+        name: "Medium Vault",
+        rotation: 0,
+        connections: [Cross, Moon, None, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 2,
+        name: "Medium Vault",
+        rotation: 0,
+        connections: [Moon, None, None, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 2,
+        name: "Medium Vault",
+        rotation: 0,
+        connections: [None, Moon, None, Diamond]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 1,
+        name: "Small Vault",
+        rotation: 0,
+        connections: [None, None, None, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 1,
+        name: "Small Vault",
+        rotation: 0,
+        connections: [None, Diamond, None, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 1,
+        name: "Small Vault",
+        rotation: 0,
+        connections: [None, None, Moon, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 1,
+        name: "Small Vault",
+        rotation: 0,
+        connections: [Cross, None, None, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 3,
+        name: "Briber's Vault",
+        rotation: 0,
+        connections: [Diamond, None, None, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 3,
+        name: "Briber's Vault",
+        rotation: 0,
+        connections: [Diamond, Moon, None, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 7,
+        name: "Cold Vault",
+        rotation: 0,
+        connections: [Moon, Moon, Diamond, Cross]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Dynamic Vault",
+        rotation: 0,
+        connections: [Moon, Cross, Diamond, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Entropic Vault",
+        rotation: 0,
+        connections: [Diamond, Cross, Cross, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Candy Vault",
+        rotation: 0,
+        connections: [Cross, Moon, Moon, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Lonely Vault",
+        rotation: 0,
+        connections: [Cross, None, Cross, None]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Lonely Vault",
+        rotation: 0,
+        connections: [None, Moon, None, Moon]
+    ),
+    SimpleRoom(
+        thone: false,
+        treasure: 0,
+        name: "Nuclear Vault",
+        rotation: 0,
+        connections: [Cross, None, Diamond, Moon]
+    ),
+]

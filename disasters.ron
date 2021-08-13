@@ -1,0 +1,182 @@
+[
+    SimpleDisater(
+        name: "Nuclear Meltdown",
+        diamond: DamageCalculation(
+            multiplier: 1,
+            addition: 0
+        ),
+        cross: DamageCalculation(
+            multiplier: 1,
+            addition: 0
+        ),
+        moon: DamageCalculation(
+            multiplier: 0,
+            addition: 2
+        )
+    ),
+    SimpleDisater(
+        name: "Nebula Drake",
+        diamond: DamageCalculation(
+            multiplier: 1,
+            addition: 0
+        ),
+        cross: DamageCalculation(
+            multiplier: 0,
+            addition: 2
+        ),
+        moon: DamageCalculation(
+            multiplier: 1,
+            addition: 0
+        )
+    ),
+    SimpleDisater(
+        name: "Gas Explosion",
+        diamond: DamageCalculation(
+            multiplier: 1,
+            addition: 1
+        ),
+        cross: DamageCalculation(
+            multiplier: 1,
+            addition: 0
+        ),
+        moon: DamageCalculation(
+            multiplier: 0,
+            addition: 1
+        )
+    ),
+    SimpleDisater(
+        name: "Meteor",
+        diamond: DamageCalculation(
+            multiplier: 1,
+            addition: 1
+        ),
+        cross: DamageCalculation(
+            multiplier: 0,
+            addition: 1
+        ),
+        moon: DamageCalculation(
+            multiplier: 1,
+            addition: 0
+        )
+    ),
+    SimpleDisater(
+        name: "Magmaquake",
+        diamond: DamageCalculation(
+            multiplier: 1,
+            addition: 0
+        ),
+        cross: DamageCalculation(
+            multiplier: 0,
+            addition: 1
+        ),
+        moon: DamageCalculation(
+            multiplier: 1,
+            addition: 1
+        )
+    ),
+    SimpleDisater(
+        name: "Entropy Demon",
+        diamond: DamageCalculation(
+            multiplier: 1,
+            addition: 0
+        ),
+        cross: DamageCalculation(
+            multiplier: 1,
+            addition: 1
+        ),
+        moon: DamageCalculation(
+            multiplier: 0,
+            addition: 2
+        )
+    ),
+    SimpleDisater(
+        name: "Verdant Chaos",
+        diamond: DamageCalculation(
+            multiplier: 0,
+            addition: 1
+        ),
+        cross: DamageCalculation(
+            multiplier: 1,
+            addition: 0
+        ),
+        moon: DamageCalculation(
+            multiplier: 1,
+            addition: 1
+        )
+    ),
+    SimpleDisater(
+        name: "Aurora Whale",
+        diamond: DamageCalculation(
+            multiplier: 1,
+            addition: 1
+        ),
+        cross: DamageCalculation(
+            multiplier: 0,
+            addition: 0
+        ),
+        moon: DamageCalculation(
+            multiplier: 1,
+            addition: 1
+        )
+    ),
+    SimpleDisater(
+        name: "Space Bees",
+        diamond: DamageCalculation(
+            multiplier: 0,
+            addition: 1
+        ),
+        cross: DamageCalculation(
+            multiplier: 1,
+            addition: 1
+        ),
+        moon: DamageCalculation(
+            multiplier: 1,
+            addition: 0
+        )
+    ),
+    SimpleDisater(
+        name: "Aurora Veil",
+        diamond: DamageCalculation(
+            multiplier: 0,
+            addition: 2
+        ),
+        cross: DamageCalculation(
+            multiplier: 1,
+            addition: 0
+        ),
+        moon: DamageCalculation(
+            multiplier: 1,
+            addition: 0
+        )
+    ),
+    SimpleDisater(
+        name: "Warp Storm",
+        diamond: DamageCalculation(
+            multiplier: 0,
+            addition: 0
+        ),
+        cross: DamageCalculation(
+            multiplier: 1,
+            addition: 1
+        ),
+        moon: DamageCalculation(
+            multiplier: 1,
+            addition: 1
+        )
+    ),
+    SimpleDisater(
+        name: "Ionic Tornado",
+        diamond: DamageCalculation(
+            multiplier: 1,
+            addition: 1
+        ),
+        cross: DamageCalculation(
+            multiplier: 1,
+            addition: 1
+        ),
+        moon: DamageCalculation(
+            multiplier: 0,
+            addition: 0
+        )
+    ),
+]
