@@ -2,6 +2,7 @@ mod simple_disaster;
 pub use simple_disaster::SimpleDisaster;
 
 pub trait Disaster: DisasterClone {
+    fn get_name(&self) -> &str;
     fn diamond_damage(&self, num_previous_disasters: u8) -> u8;
     fn cross_damage(&self, num_previous_disasters: u8) -> u8;
     fn moon_damage(&self, num_previous_disasters: u8) -> u8;
