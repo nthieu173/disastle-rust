@@ -1,5 +1,6 @@
 use nanoid::nanoid;
 
+#[derive(Clone)]
 pub struct PlayerInfo {
     pub name: String,
     pub secret: String,

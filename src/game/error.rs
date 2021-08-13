@@ -3,12 +3,9 @@ use std::{error::Error, fmt};
 
 #[derive(Debug)]
 pub enum GameError {
-    FullPlayers,
-    InvalidAction,
     InvalidPlayer,
-    InvalidDisaster,
+    NotTurnPlayer,
     InvalidShopIndex,
-    InvalidRoomIndex,
     CastleError(CastleError),
 }
 
@@ -21,13 +18,14 @@ impl From<CastleError> for GameError {
 impl fmt::Display for GameError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            GameError::FullPlayers => write!(f, "full players error"),
-            GameError::InvalidAction => write!(f, "invalid action error"),
-            GameError::InvalidPlayer => write!(f, "There is no player with matching secret in game."),
-            GameError::InvalidDisaster => write!(f, "invalid disaster error"),
-            GameError::InvalidShopIndex => write!(f, "invalid shop index error"),
-            GameError::InvalidRoomIndex => write!(f, "invalid room index error"),
-            GameError::CastleError(e) => write!(f, "castle error: {}", e),
+            GameError::InvalidPlayer => {
+                write!(f, "There is no player with matching secret in game.")
+            }
+            GameError::NotTurnPlayer => {
+                write!(f, "It is not the turn of the player yet.")
+            }
+            GameError::InvalidShopIndex => write!(f, "Shop index is out of bounds"),
+            GameError::CastleError(e) => write!(f, "Castle error: {}", e),
         }
     }
 }
