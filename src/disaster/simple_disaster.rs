@@ -1,5 +1,6 @@
 use crate::disaster::Disaster;
 
+#[derive(Clone)]
 pub struct SimpleDisaster {
     diamond: DamageCalculation,
     cross: DamageCalculation,
@@ -7,17 +8,30 @@ pub struct SimpleDisaster {
 }
 
 impl SimpleDisaster {
-    pub fn new(diamond_m: u8, diamond_a: u8,
-            cross_m: u8, cross_a: u8,
-            moon_m: u8, moon_a: u8) -> SimpleDisaster {
+    pub fn new(
+        diamond_m: u8,
+        diamond_a: u8,
+        cross_m: u8,
+        cross_a: u8,
+        moon_m: u8,
+        moon_a: u8,
+    ) -> SimpleDisaster {
         SimpleDisaster {
-            diamond: DamageCalculation { multiplier: diamond_m, addition: diamond_a },
-            cross: DamageCalculation { multiplier: cross_m, addition: cross_a },
-            moon: DamageCalculation { multiplier: moon_m, addition: moon_a },
+            diamond: DamageCalculation {
+                multiplier: diamond_m,
+                addition: diamond_a,
+            },
+            cross: DamageCalculation {
+                multiplier: cross_m,
+                addition: cross_a,
+            },
+            moon: DamageCalculation {
+                multiplier: moon_m,
+                addition: moon_a,
+            },
         }
     }
 }
-
 
 impl Disaster for SimpleDisaster {
     fn diamond_damage(&self, num_previous_disasters: u8) -> u8 {
@@ -31,6 +45,7 @@ impl Disaster for SimpleDisaster {
     }
 }
 
+#[derive(Clone)]
 struct DamageCalculation {
     multiplier: u8,
     addition: u8,
