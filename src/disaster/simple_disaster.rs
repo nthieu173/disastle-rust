@@ -45,6 +45,31 @@ impl Disaster for SimpleDisaster {
     }
 }
 
+impl SimpleDisaster {
+    pub fn from_disaster(disaster: &dyn Disaster) -> SimpleDisaster {
+        let d_add = disaster.diamond_damage(0);
+        let d_mult = disaster.diamond_damage(1) - d_add;
+        let c_add = disaster.cross_damage(0);
+        let c_mult = disaster.cross_damage(1) - c_add;
+        let m_add = disaster.moon_damage(0);
+        let m_mult = disaster.moon_damage(1) - m_add;
+        SimpleDisaster {
+            diamond: DamageCalculation {
+                multiplier: d_mult,
+                addition: d_add,
+            },
+            cross: DamageCalculation {
+                multiplier: c_mult,
+                addition: c_add,
+            },
+            moon: DamageCalculation {
+                multiplier: m_mult,
+                addition: m_add,
+            },
+        }
+    }
+}
+
 #[derive(Clone)]
 struct DamageCalculation {
     multiplier: u8,

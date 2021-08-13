@@ -1,4 +1,5 @@
-pub mod simple_disaster;
+mod simple_disaster;
+pub use simple_disaster::SimpleDisaster;
 
 pub trait Disaster: DisasterClone {
     fn diamond_damage(&self, num_previous_disasters: u8) -> u8;
