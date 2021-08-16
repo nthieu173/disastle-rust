@@ -40,14 +40,23 @@ impl Disaster for SimpleDisaster {
     fn get_name(&self) -> &str {
         &self.name
     }
-    fn diamond_damage(&self, num_previous_disasters: u8) -> u8 {
-        num_previous_disasters * self.diamond.multiplier + self.diamond.addition
+    fn diamond_multiplier(&self) -> u8 {
+        self.diamond.multiplier
     }
-    fn cross_damage(&self, num_previous_disasters: u8) -> u8 {
-        num_previous_disasters * self.cross.multiplier + self.cross.addition
+    fn diamond_addition(&self) -> u8 {
+        self.diamond.addition
     }
-    fn moon_damage(&self, num_previous_disasters: u8) -> u8 {
-        num_previous_disasters * self.moon.multiplier + self.moon.addition
+    fn cross_multiplier(&self) -> u8 {
+        self.cross.multiplier
+    }
+    fn cross_addition(&self) -> u8 {
+        self.cross.addition
+    }
+    fn moon_multiplier(&self) -> u8 {
+        self.moon.multiplier
+    }
+    fn moon_addition(&self) -> u8 {
+        self.moon.addition
     }
 }
 
