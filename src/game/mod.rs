@@ -4,6 +4,7 @@ mod player;
 
 use std::{
     collections::{HashMap, HashSet},
+    hash::{Hash, Hasher},
     iter::Iterator,
     result,
 };
@@ -34,6 +35,46 @@ pub struct GameState {
     setting: GameSetting,
 }
 
+impl Hash for GameState {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        // Use the turn_order for a stable hash. If the turn order is different, the game state is probably different.
+        for secret in self.turn_order.iter() {
+            self.castles.get(secret).unwrap().hash(state);
+        }
+        self.shop.hash(state);
+        self.discard.hash(state);
+        self.previous_disasters.hash(state);
+        self.queued_disasters.hash(state);
+        self.turn_index.hash(state);
+        self.round.hash(state);
+        self.setting.hash(state);
+    }
+}
+
+impl PartialEq for GameState {
+    fn eq(&self, other: &GameState) -> bool {
+        for secret in self.turn_order.iter() {
+            let castle = self.castles.get(secret).unwrap();
+            if let Some(other_castle) = other.castles.get(secret) {
+                if castle != other_castle {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        self.shop == other.shop
+            && self.discard == other.discard
+            && self.previous_disasters == other.previous_disasters
+            && self.queued_disasters == other.queued_disasters
+            && self.turn_index == other.turn_index
+            && self.round == other.round
+            && self.setting == other.setting
+    }
+}
+
+impl Eq for GameState {}
+
 #[derive(Clone)]
 pub struct GameSetting {
     pub num_safe: u8,
@@ -41,6 +82,26 @@ pub struct GameSetting {
     pub num_disasters: u8,
     pub rooms: HashSet<Box<dyn Room>>,
     pub disasters: HashSet<Box<dyn Disaster>>,
+}
+
+impl PartialEq for GameSetting {
+    // Let's hope that rooms and disasters don't change.
+    fn eq(&self, other: &GameSetting) -> bool {
+        self.num_safe == other.num_safe
+            && self.num_shop == other.num_shop
+            && self.num_disasters == other.num_disasters
+    }
+}
+
+impl Eq for GameSetting {}
+
+impl Hash for GameSetting {
+    // Let's hope that rooms and disasters don't change.
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.num_safe.hash(state);
+        self.num_shop.hash(state);
+        self.num_disasters.hash(state);
+    }
 }
 
 impl GameState {
@@ -300,6 +361,7 @@ impl GameState {
             })
             .collect();
         if game.turn_index >= game.turn_order.len() {
+            game.round += 1;
             game.turn_index = 0;
         }
         game.previous_disasters.push(disaster);
@@ -308,6 +370,10 @@ impl GameState {
 }
 
 impl GameState {
+    pub fn is_over(self) -> bool {
+        self.turn_order.len() <= 1
+            || self.previous_disasters.len() == self.setting.num_disasters as usize
+    }
     pub fn get_setting(&self) -> &GameSetting {
         &self.setting
     }
