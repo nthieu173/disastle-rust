@@ -11,14 +11,13 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 [[package]]
 name = "disastle-castle-rust"
 version = "0.1.0"
-source = "git+https://github.com/nthieu173/disastle-castle-rust.git#56a1acbf34d1e8263e943fef184f51ef0f36a2b7"
+source = "git+https://github.com/nthieu173/disastle-castle-rust.git#f3066f34c93b8a8b2c618c82df5f6eb3f6f968d4"
 
 [[package]]
 name = "disastle-rust"
 version = "0.1.0"
 dependencies = [
  "disastle-castle-rust",
- "nanoid",
  "rand",
 ]
 
@@ -38,15 +37,6 @@ name = "libc"
 version = "0.2.99"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a7f823d141fe0a24df1e23b4af4e3c7ba9e5966ec514ea068c93024aa7deb765"
-
-[[package]]
-name = "nanoid"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3ffa00dec017b5b1a8b7cf5e2c008bfda1aa7e0697ac1508b491fdf2622fb4d8"
-dependencies = [
- "rand",
-]
 
 [[package]]
 name = "ppv-lite86"

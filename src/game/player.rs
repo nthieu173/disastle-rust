@@ -1,5 +1,3 @@
-use nanoid::nanoid;
-
 #[derive(Clone)]
 pub struct PlayerInfo {
     pub name: String,
@@ -7,10 +5,10 @@ pub struct PlayerInfo {
 }
 
 impl PlayerInfo {
-    pub fn new(name: &str) -> PlayerInfo {
+    pub fn new(name: &str, secret: &str) -> PlayerInfo {
         PlayerInfo {
             name: name.to_owned(),
-            secret: nanoid!(),
+            secret: secret.to_owned(),
         }
     }
 }
