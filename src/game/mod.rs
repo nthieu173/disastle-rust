@@ -1,23 +1,26 @@
-mod error;
-
-pub use error::GameError;
 mod card;
+mod error;
 mod player;
 
-pub use crate::disaster::{Disaster, SimpleDisaster};
-use card::Card;
-use disastle_castle_rust::{Action, Castle, Room, SimpleRoom};
-use player::PlayerInfo;
+use std::{
+    collections::{HashMap, HashSet},
+    iter::Iterator,
+    result,
+};
 
 use rand::{prelude::IteratorRandom, rngs::ThreadRng, seq::SliceRandom};
 
-use std::{collections::HashMap, iter::Iterator, result};
+pub use crate::disaster::Disaster;
+pub use error::GameError;
+
+use card::Card;
+use disastle_castle_rust::{Action, Castle, Room};
+use player::PlayerInfo;
 
 type Result<T> = result::Result<T, GameError>;
 
 #[derive(Clone)]
 pub struct GameState {
-    players: HashMap<String, PlayerInfo>,
     castles: HashMap<String, Castle>,
     shop: Vec<Box<dyn Room>>,
     discard: Vec<Box<dyn Room>>,
@@ -36,15 +39,12 @@ pub struct GameSetting {
     pub num_safe: u8,
     pub num_shop: u8,
     pub num_disasters: u8,
+    pub rooms: HashSet<Box<dyn Room>>,
+    pub disasters: HashSet<Box<dyn Disaster>>,
 }
 
 impl GameState {
-    pub fn new(
-        players: Vec<PlayerInfo>,
-        rooms: Vec<Box<dyn Room>>,
-        disasters: Vec<Box<dyn Disaster>>,
-        setting: GameSetting,
-    ) -> GameState {
+    pub fn new(players: &Vec<PlayerInfo>, setting: GameSetting) -> GameState {
         let mut players_map = HashMap::new();
         for player in players {
             players_map.insert(player.secret.clone(), player);
@@ -52,7 +52,9 @@ impl GameState {
         let players = players_map;
         let mut thrones = Vec::new();
         let mut rng = rand::thread_rng();
-        let mut deck: Vec<Box<dyn Room>> = rooms
+        let mut deck: Vec<Box<dyn Room>> = setting
+            .rooms
+            .clone()
             .into_iter()
             .filter(|room| {
                 if !room.is_throne() {
@@ -69,17 +71,17 @@ impl GameState {
             .map(|r| Card::Room(r))
             .collect();
         let mut deck: Vec<Card> = deck.into_iter().map(|r| Card::Room(r)).collect();
-        let mut disasters: Vec<Card> = disasters
+        let mut disasters: Vec<Card> = setting
+            .clone()
+            .disasters
             .into_iter()
             .choose_multiple(&mut rng, setting.num_disasters as usize)
             .into_iter()
             .map(|d| Card::Disaster(d))
             .collect();
         deck.append(&mut disasters);
-        drop(disasters);
         deck.shuffle(&mut rng);
         deck.append(&mut safe);
-        drop(safe);
         let mut shop = Vec::new();
         for _ in 0..setting.num_shop as usize {
             match deck.pop().unwrap() {
@@ -101,7 +103,6 @@ impl GameState {
         }
         turn_order.shuffle(&mut rng);
         GameState {
-            players,
             castles,
             shop,
             discard: Vec::new(),
@@ -113,6 +114,59 @@ impl GameState {
             round: 0,
             rng,
             setting,
+        }
+    }
+    pub fn safe_shrodinger(&self) -> GameState {
+        let mut new_turn_order = Vec::new();
+        let mut new_castles = HashMap::new();
+        let mut possible_rooms = self.setting.rooms.clone();
+        for room in self.discard.iter() {
+            possible_rooms.remove(room);
+        }
+        for (index, secret) in self.turn_order.iter().enumerate() {
+            new_turn_order.push(index.to_string());
+            let castle = self.castles.get(secret).unwrap().clone();
+            for room in castle.get_rooms().values() {
+                possible_rooms.remove(room);
+            }
+            new_castles.insert(index.to_string(), castle);
+        }
+        let mut possible_disasters = self.setting.disasters.clone();
+        for disaster in self.previous_disasters.iter() {
+            possible_disasters.remove(disaster);
+        }
+        for disaster in self.queued_disasters.iter() {
+            possible_disasters.remove(disaster);
+        }
+        let mut rng = rand::thread_rng();
+        let possible_disasters_vec: Vec<&Box<dyn Disaster>> = possible_disasters.iter().collect();
+        let mut deck: Vec<Card> = possible_rooms
+            .iter()
+            .map(|r| Card::Room(r.clone()))
+            .chain(
+                possible_disasters_vec
+                    .choose_multiple(
+                        &mut rng,
+                        self.setting.num_disasters as usize
+                            - self.previous_disasters.len()
+                            - self.queued_disasters.len(),
+                    )
+                    .map(|d| Card::Disaster((*d).clone())),
+            )
+            .collect();
+        deck.shuffle(&mut rng);
+        GameState {
+            castles: new_castles,
+            shop: self.shop.clone(),
+            discard: self.discard.clone(),
+            previous_disasters: self.previous_disasters.clone(),
+            queued_disasters: self.queued_disasters.clone(),
+            deck,
+            turn_order: new_turn_order,
+            turn_index: 0,
+            round: 0,
+            rng,
+            setting: self.setting.clone(),
         }
     }
     pub fn action(&mut self, player_secret: &str, action: Action) -> Result<GameState> {
@@ -258,7 +312,7 @@ impl GameState {
         &self.setting
     }
     pub fn is_player(&self, secret: &str) -> bool {
-        self.players.contains_key(secret)
+        self.castles.contains_key(secret)
     }
     pub fn is_turn_player(&self, secret: &str) -> bool {
         self.turn_player() == secret
@@ -266,28 +320,16 @@ impl GameState {
     pub fn turn_player(&self) -> &str {
         &self.turn_order[self.turn_index]
     }
-    pub fn view_shop(&self) -> Vec<SimpleRoom> {
-        self.shop
-            .iter()
-            .map(|r| SimpleRoom::from_room(r.as_ref()))
-            .collect()
+    pub fn view_shop(&self) -> &Vec<Box<dyn Room>> {
+        &self.shop
     }
-    pub fn view_discard(&self) -> Vec<SimpleRoom> {
-        self.discard
-            .iter()
-            .map(|r| SimpleRoom::from_room(r.as_ref()))
-            .collect()
+    pub fn view_discard(&self) -> &Vec<Box<dyn Room>> {
+        &self.discard
     }
-    pub fn view_previous_disasters(&self) -> Vec<SimpleDisaster> {
-        self.previous_disasters
-            .iter()
-            .map(|r| SimpleDisaster::from_disaster(r.as_ref()))
-            .collect()
+    pub fn view_previous_disasters(&self) -> &Vec<Box<dyn Disaster>> {
+        &self.previous_disasters
     }
-    pub fn view_queued_disasters(&self) -> Vec<SimpleDisaster> {
-        self.queued_disasters
-            .iter()
-            .map(|r| SimpleDisaster::from_disaster(r.as_ref()))
-            .collect()
+    pub fn view_queued_disasters(&self) -> &Vec<Box<dyn Disaster>> {
+        &self.queued_disasters
     }
 }
