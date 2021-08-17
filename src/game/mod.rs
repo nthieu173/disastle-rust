@@ -395,7 +395,7 @@ impl GameState {
         self.castles.contains_key(secret)
     }
     pub fn is_turn_player(&self, secret: &str) -> bool {
-        self.turn_player() == secret
+        self.turn_order[self.turn_index] == secret
     }
     pub fn get_turn_index(&self) -> usize {
         self.turn_index
