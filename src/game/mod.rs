@@ -406,9 +406,6 @@ impl GameState {
         }
         Ok(self.turn_order.iter().position(|s| s == secret).unwrap())
     }
-    pub fn turn_player(&self) -> &str {
-        &self.turn_order[self.turn_index]
-    }
     pub fn view_shop(&self) -> &Vec<Box<dyn Room>> {
         &self.shop
     }
