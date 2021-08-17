@@ -11,7 +11,7 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 [[package]]
 name = "disastle-castle-rust"
 version = "0.1.0"
-source = "git+https://github.com/nthieu173/disastle-castle-rust.git#bbe3b86fbcf300f39e998a5a9c199ce6a8a43faf"
+source = "git+https://github.com/nthieu173/disastle-castle-rust.git#41db13d964e7e6d566c5cbd81e191a94452fcf46"
 
 [[package]]
 name = "disastle-rust"

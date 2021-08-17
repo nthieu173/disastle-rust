@@ -230,7 +230,21 @@ impl GameState {
             setting: self.setting.clone(),
         }
     }
-    pub fn action(&mut self, player_secret: &str, action: Action) -> Result<GameState> {
+    pub fn get_castles(&self) -> Vec<Castle> {
+        self.turn_order
+            .iter()
+            .map(|secret| self.castles.get(secret).unwrap().clone())
+            .collect()
+    }
+    pub fn possible_actions(&self, player_secret: &str) -> Vec<Action> {
+        if let Some(castle) = self.castles.get(player_secret) {
+            if castle.get_damage() != 0 || self.is_turn_player(player_secret) {
+                return castle.possible_actions(&self.shop);
+            }
+        }
+        return Vec::new();
+    }
+    pub fn action(&self, player_secret: &str, action: Action) -> Result<GameState> {
         if let Some(castle) = self.castles.get(player_secret) {
             if castle.get_damage() == 0 && !self.is_turn_player(player_secret) {
                 return Err(GameError::NotTurnPlayer);
@@ -382,6 +396,15 @@ impl GameState {
     }
     pub fn is_turn_player(&self, secret: &str) -> bool {
         self.turn_player() == secret
+    }
+    pub fn get_turn_index(&self) -> usize {
+        self.turn_index
+    }
+    pub fn get_player_turn_index(&self, secret: &str) -> Result<usize> {
+        if !self.castles.contains_key(secret) {
+            return Err(GameError::InvalidPlayer);
+        }
+        Ok(self.turn_order.iter().position(|s| s == secret).unwrap())
     }
     pub fn turn_player(&self) -> &str {
         &self.turn_order[self.turn_index]
