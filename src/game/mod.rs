@@ -384,7 +384,7 @@ impl GameState {
 }
 
 impl GameState {
-    pub fn is_over(self) -> bool {
+    pub fn is_over(&self) -> bool {
         self.turn_order.len() <= 1
             || self.previous_disasters.len() == self.setting.num_disasters as usize
     }
