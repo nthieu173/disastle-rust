@@ -1,6 +1,7 @@
 mod card;
 mod error;
 mod player;
+mod schrodinger;
 
 use std::{
     cmp::Ordering,
@@ -12,12 +13,13 @@ use std::{
 
 use rand::{prelude::IteratorRandom, rngs::ThreadRng, seq::SliceRandom};
 
-pub use crate::disaster::Disaster;
 pub use error::GameError;
 
+pub use crate::disaster::Disaster;
 use card::Card;
 use disastle_castle_rust::{Action, Castle, Room};
 use player::PlayerInfo;
+use schrodinger::SchrodingerGameState;
 
 type Result<T> = result::Result<T, GameError>;
 
@@ -26,9 +28,9 @@ pub struct GameState {
     castles: HashMap<String, Castle>,
     shop: Vec<Box<dyn Room>>,
     discard: Vec<Box<dyn Room>>,
+    deck: Vec<Card>,
     previous_disasters: Vec<Box<dyn Disaster>>,
     queued_disasters: Vec<Box<dyn Disaster>>,
-    deck: Vec<Card>,
     turn_order: Vec<String>,
     turn_index: usize,
     round: u8,
@@ -178,7 +180,10 @@ impl GameState {
             setting,
         }
     }
-    pub fn safe_shrodinger(&self) -> GameState {
+    pub fn schrodinger(&self, secret: &str) -> Result<SchrodingerGameState> {
+        if !self.castles.contains_key(secret) {
+            return Err(GameError::InvalidPlayer);
+        }
         let mut new_turn_order = Vec::new();
         let mut new_castles = HashMap::new();
         let mut possible_rooms = self.setting.rooms.clone();
@@ -200,36 +205,20 @@ impl GameState {
         for disaster in self.queued_disasters.iter() {
             possible_disasters.remove(disaster);
         }
-        let mut rng = rand::thread_rng();
-        let possible_disasters_vec: Vec<&Box<dyn Disaster>> = possible_disasters.iter().collect();
-        let mut deck: Vec<Card> = possible_rooms
-            .iter()
-            .map(|r| Card::Room(r.clone()))
-            .chain(
-                possible_disasters_vec
-                    .choose_multiple(
-                        &mut rng,
-                        self.setting.num_disasters as usize
-                            - self.previous_disasters.len()
-                            - self.queued_disasters.len(),
-                    )
-                    .map(|d| Card::Disaster((*d).clone())),
-            )
-            .collect();
-        deck.shuffle(&mut rng);
-        GameState {
+        Ok(SchrodingerGameState {
             castles: new_castles,
             shop: self.shop.clone(),
             discard: self.discard.clone(),
+            possible_rooms,
             previous_disasters: self.previous_disasters.clone(),
             queued_disasters: self.queued_disasters.clone(),
-            deck,
+            possible_disasters,
             turn_order: new_turn_order,
             turn_index: 0,
             round: 0,
-            rng,
+            rng: self.rng.clone(),
             setting: self.setting.clone(),
-        }
+        })
     }
     pub fn get_castles(&self) -> Vec<Castle> {
         self.turn_order
