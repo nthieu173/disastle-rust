@@ -3,6 +3,7 @@ mod error;
 mod player;
 
 use std::{
+    cmp::Ordering,
     collections::{HashMap, HashSet},
     hash::{Hash, Hasher},
     iter::Iterator,
@@ -383,13 +384,55 @@ impl GameState {
     }
 }
 
+fn compare_game_state(a: &Castle, b: &Castle) -> Ordering {
+    if !a.is_lost() && b.is_lost() {
+        return Ordering::Greater;
+    } else if a.is_lost() && !b.is_lost() {
+        return Ordering::Less;
+    } else if a.get_treasure() > b.get_treasure() {
+        return Ordering::Greater;
+    } else if a.get_treasure() < b.get_treasure() {
+        return Ordering::Less;
+    } else {
+        if a.get_rooms().len() > b.get_rooms().len() {
+            return Ordering::Greater;
+        } else if a.get_rooms().len() < b.get_rooms().len() {
+            return Ordering::Less;
+        } else {
+            let (diamond, cross, moon, any) = a.get_links();
+            let a_links = diamond + cross + moon + any;
+            let (diamond, cross, moon, any) = b.get_links();
+            let b_links = diamond + cross + moon + any;
+            if a_links > b_links {
+                return Ordering::Greater;
+            } else if a_links < b_links {
+                return Ordering::Less;
+            } else {
+                return Ordering::Equal;
+            }
+        }
+    }
+}
+
 impl GameState {
     pub fn is_over(&self) -> bool {
         self.turn_order.len() <= 1
             || self.previous_disasters.len() == self.setting.num_disasters as usize
     }
-    pub fn get_setting(&self) -> &GameSetting {
-        &self.setting
+    pub fn is_victorious(&self, secret: &str) -> bool {
+        let mut castles: Vec<(&String, &Castle)> = self.castles.iter().collect();
+        castles.sort_unstable_by(|(_, a), (_, b)| compare_game_state(b, a)); // Reversed for descending order
+        let winner = castles.first();
+        if winner.is_none() {
+            return false;
+        }
+        let winner = winner.unwrap().clone();
+        let winners: Vec<(&String, &Castle)> = castles
+            .into_iter()
+            .clone()
+            .filter(|(_, castle)| matches!(compare_game_state(castle, winner.1), Ordering::Equal))
+            .collect();
+        winners.iter().any(|(s, _)| s == &secret)
     }
     pub fn is_player(&self, secret: &str) -> bool {
         self.castles.contains_key(secret)
@@ -417,5 +460,8 @@ impl GameState {
     }
     pub fn view_queued_disasters(&self) -> &Vec<Box<dyn Disaster>> {
         &self.queued_disasters
+    }
+    pub fn get_setting(&self) -> &GameSetting {
+        &self.setting
     }
 }
