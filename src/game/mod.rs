@@ -19,7 +19,7 @@ pub use crate::disaster::Disaster;
 use card::Card;
 use disastle_castle_rust::{Action, Castle, Room};
 use player::PlayerInfo;
-use schrodinger::SchrodingerGameState;
+pub use schrodinger::SchrodingerGameState;
 
 type Result<T> = result::Result<T, GameError>;
 
