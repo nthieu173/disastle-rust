@@ -388,10 +388,10 @@ fn compare_game_state(a: &Castle, b: &Castle) -> Ordering {
         } else if a.get_rooms().len() < b.get_rooms().len() {
             return Ordering::Less;
         } else {
-            let (diamond, cross, moon, any) = a.get_links();
-            let a_links = diamond + cross + moon + any;
-            let (diamond, cross, moon, any) = b.get_links();
-            let b_links = diamond + cross + moon + any;
+            let (diamond, cross, moon, wild) = a.get_links();
+            let a_links = diamond + cross + moon + wild;
+            let (diamond, cross, moon, wild) = b.get_links();
+            let b_links = diamond + cross + moon + wild;
             if a_links > b_links {
                 return Ordering::Greater;
             } else if a_links < b_links {
