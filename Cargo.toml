@@ -9,3 +9,5 @@ edition = "2018"
 [dependencies]
 disastle-castle-rust = { git = "https://github.com/nthieu173/disastle-castle-rust.git"}
 rand = {version="0.8", features=["alloc"]}
+serde = { version = "1.0", features = ["derive"] }
+ron = "0.6"
