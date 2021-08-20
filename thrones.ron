@@ -1,62 +1,72 @@
 [
     SimpleRoom(
-        thone: true,
+        throne: true,
         name: "Throne Room (White)",
+        treasure: 0,
         rotation: 0,
-        connections: [Any, Any, Any, Any]
+        connections: (Wild, Wild, Wild, Wild)
     ),
     SimpleRoom(
-        thone: true,
+        throne: true,
         name: "Throne Room (Green)",
+        treasure: 0,
         rotation: 0,
-        connections: [Any, Any, Any, Any]
+        connections: (Wild, Wild, Wild, Wild)
     ),
     SimpleRoom(
-        thone: true,
+        throne: true,
         name: "Throne Room (Purple)",
+        treasure: 0,
         rotation: 0,
-        connections: [Any, Any, Any, Any]
+        connections: (Wild, Wild, Wild, Wild)
     ),
     SimpleRoom(
-        thone: true,
+        throne: true,
         name: "Throne Room (Red)",
+        treasure: 0,
         rotation: 0,
-        connections: [Any, Any, Any, Any]
+        connections: (Wild, Wild, Wild, Wild)
     ),
     SimpleRoom(
-        thone: true,
+        throne: true,
         name: "Throne Room (Turquoise)",
+        treasure: 0,
         rotation: 0,
-        connections: [Any, Any, Any, Any]
+        connections: (Wild, Wild, Wild, Wild)
     ),
     SimpleRoom(
-        thone: true,
+        throne: true,
         name: "Throne Room (Pink)",
+        treasure: 0,
         rotation: 0,
-        connections: [Any, Any, Any, Any]
+        connections: (Wild, Wild, Wild, Wild)
     ),
     SimpleRoom(
-        thone: true,
+        throne: true,
         name: "Throne Room (Orange)",
+        treasure: 0,
         rotation: 0,
-        connections: [Any, Any, Any, Any]
+        connections: (Wild, Wild, Wild, Wild)
     ),
     SimpleRoom(
-        thone: true,
+        throne: true,
         name: "Throne Room (Black)",
+        treasure: 0,
         rotation: 0,
-        connections: [Any, Any, Any, Any]
+        connections: (Wild, Wild, Wild, Wild)
     ),
     SimpleRoom(
-        thone: true,
+        throne: true,
         name: "Throne Room (Yellow)",
+        treasure: 0,
         rotation: 0,
-        connections: [Any, Any, Any, Any]
+        connections: (Wild, Wild, Wild, Wild)
     ),
     SimpleRoom(
-        thone: true,
+        throne: true,
         name: "Throne Room (Blue)",
+        treasure: 0,
         rotation: 0,
-        connections: [Any, Any, Any, Any]
-    ),
+        connections: (Wild, Wild, Wild, Wild)
+    )
 ]

@@ -1,5 +1,5 @@
 [
-    SimpleDisater(
+    SimpleDisaster(
         name: "Nuclear Meltdown",
         diamond: DamageCalculation(
             multiplier: 1,
@@ -14,7 +14,7 @@
             addition: 2
         )
     ),
-    SimpleDisater(
+    SimpleDisaster(
         name: "Nebula Drake",
         diamond: DamageCalculation(
             multiplier: 1,
@@ -29,7 +29,7 @@
             addition: 0
         )
     ),
-    SimpleDisater(
+    SimpleDisaster(
         name: "Gas Explosion",
         diamond: DamageCalculation(
             multiplier: 1,
@@ -44,7 +44,7 @@
             addition: 1
         )
     ),
-    SimpleDisater(
+    SimpleDisaster(
         name: "Meteor",
         diamond: DamageCalculation(
             multiplier: 1,
@@ -59,7 +59,7 @@
             addition: 0
         )
     ),
-    SimpleDisater(
+    SimpleDisaster(
         name: "Magmaquake",
         diamond: DamageCalculation(
             multiplier: 1,
@@ -74,7 +74,7 @@
             addition: 1
         )
     ),
-    SimpleDisater(
+    SimpleDisaster(
         name: "Entropy Demon",
         diamond: DamageCalculation(
             multiplier: 1,
@@ -89,7 +89,7 @@
             addition: 2
         )
     ),
-    SimpleDisater(
+    SimpleDisaster(
         name: "Verdant Chaos",
         diamond: DamageCalculation(
             multiplier: 0,
@@ -104,7 +104,7 @@
             addition: 1
         )
     ),
-    SimpleDisater(
+    SimpleDisaster(
         name: "Aurora Whale",
         diamond: DamageCalculation(
             multiplier: 1,
@@ -119,7 +119,7 @@
             addition: 1
         )
     ),
-    SimpleDisater(
+    SimpleDisaster(
         name: "Space Bees",
         diamond: DamageCalculation(
             multiplier: 0,
@@ -134,7 +134,7 @@
             addition: 0
         )
     ),
-    SimpleDisater(
+    SimpleDisaster(
         name: "Aurora Veil",
         diamond: DamageCalculation(
             multiplier: 0,
@@ -149,7 +149,7 @@
             addition: 0
         )
     ),
-    SimpleDisater(
+    SimpleDisaster(
         name: "Warp Storm",
         diamond: DamageCalculation(
             multiplier: 0,
@@ -164,7 +164,7 @@
             addition: 1
         )
     ),
-    SimpleDisater(
+    SimpleDisaster(
         name: "Ionic Tornado",
         diamond: DamageCalculation(
             multiplier: 1,
