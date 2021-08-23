@@ -180,10 +180,7 @@ impl GameState {
             setting,
         }
     }
-    pub fn schrodinger(&self, secret: &str) -> Result<SchrodingerGameState> {
-        if !self.castles.contains_key(secret) {
-            return Err(GameError::InvalidPlayer);
-        }
+    pub fn to_schrodinger(&self) -> SchrodingerGameState {
         let mut new_turn_order = Vec::new();
         let mut new_castles = HashMap::new();
         let mut possible_rooms = self.setting.rooms.clone();
@@ -205,7 +202,7 @@ impl GameState {
         for disaster in self.queued_disasters.iter() {
             possible_disasters.remove(disaster);
         }
-        Ok(SchrodingerGameState {
+        SchrodingerGameState {
             castles: new_castles,
             shop: self.shop.clone(),
             discard: self.discard.clone(),
@@ -214,11 +211,11 @@ impl GameState {
             queued_disasters: self.queued_disasters.clone(),
             possible_disasters,
             turn_order: new_turn_order,
-            turn_index: 0,
-            round: 0,
+            turn_index: self.turn_index,
+            round: self.round,
             rng: self.rng.clone(),
             setting: self.setting.clone(),
-        })
+        }
     }
     pub fn get_castles(&self) -> Vec<Castle> {
         self.turn_order
