@@ -15,7 +15,6 @@ pub fn load_disasters(path: &Path) -> result::Result<Vec<SimpleDisaster>, io::Er
     let mut file = File::open(path)?;
     let mut content = String::new();
     file.read_to_string(&mut content)?;
-    println!("{}", content);
     match ron::from_str(&content) {
         Ok(disasters) => Ok(disasters),
         Err(e) => Err(io::Error::new(io::ErrorKind::InvalidData, e)),
