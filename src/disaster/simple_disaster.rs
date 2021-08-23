@@ -1,7 +1,7 @@
 use crate::disaster::Disaster;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Serialize, Deserialize, Debug)]
+#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, Eq)]
 pub struct SimpleDisaster {
     name: String,
     diamond: DamageCalculation,
@@ -85,9 +85,12 @@ impl SimpleDisaster {
             },
         }
     }
+    pub fn to_disaster(&self) -> Box<dyn Disaster> {
+        Box::new(self.clone())
+    }
 }
 
-#[derive(Clone, Serialize, Deserialize, Debug)]
+#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, Eq)]
 struct DamageCalculation {
     multiplier: u8,
     addition: u8,
