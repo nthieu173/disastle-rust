@@ -151,7 +151,8 @@ impl SchrodingerGameState {
                 game.shop.push(room);
             }
             if !redealt && disasters.len() > 1 {
-                while let Some(disaster) = disasters.pop() {
+                // Reshuffle all but the first disaster
+                for disaster in disasters.drain(..disasters.len() - 1) {
                     game.possible_disasters.insert(disaster);
                 }
                 redealt = true;
