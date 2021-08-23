@@ -23,7 +23,7 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 [[package]]
 name = "disastle-castle-rust"
 version = "0.1.0"
-source = "git+https://github.com/nthieu173/disastle-castle-rust.git#c281af704618b9e63a0442d6290e567bed42d4ba"
+source = "git+https://github.com/nthieu173/disastle-castle-rust.git#2e1ce3e0e6813b489b82bfe47e7c06c22fbaad7f"
 dependencies = [
  "serde",
 ]
