@@ -1,6 +1,6 @@
 mod card;
 mod error;
-mod player;
+pub mod player;
 mod schrodinger;
 
 use std::{
