@@ -78,11 +78,12 @@ impl PartialEq for GameState {
 
 impl Eq for GameState {}
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct GameSetting {
     pub num_safe: u8,
     pub num_shop: u8,
     pub num_disasters: u8,
+    pub thrones: HashSet<Box<dyn Room>>,
     pub rooms: HashSet<Box<dyn Room>>,
     pub disasters: HashSet<Box<dyn Disaster>>,
 }
@@ -114,21 +115,8 @@ impl GameState {
             players_map.insert(player.secret.clone(), player);
         }
         let players = players_map;
-        let mut thrones = Vec::new();
         let mut rng = rand::thread_rng();
-        let mut deck: Vec<Box<dyn Room>> = setting
-            .rooms
-            .clone()
-            .into_iter()
-            .filter(|room| {
-                if !room.is_throne() {
-                    true
-                } else {
-                    thrones.push(room.clone());
-                    false
-                }
-            })
-            .collect();
+        let mut deck: Vec<Box<dyn Room>> = setting.rooms.clone().into_iter().collect();
         deck.shuffle(&mut rng);
         let mut safe = deck
             .drain(deck.len() - setting.num_safe as usize..)
@@ -157,8 +145,11 @@ impl GameState {
                 }
             }
         }
-        let mut thrones: Vec<Box<dyn Room>> =
-            thrones.into_iter().choose_multiple(&mut rng, players.len());
+        let mut thrones: Vec<Box<dyn Room>> = setting
+            .thrones
+            .clone()
+            .into_iter()
+            .choose_multiple(&mut rng, players.len());
         let mut castles = HashMap::new();
         let mut turn_order = Vec::new();
         for secret in players.keys() {
@@ -282,10 +273,27 @@ impl GameState {
             }
             Action::Discard(pos) => {
                 let mut game = self.clone();
-                let (castle, room) = game.castles.get(player_secret).unwrap().discard_room(pos)?;
-                game.castles.insert(player_secret.to_string(), castle);
+                let (mut castle, room) = game.castles[player_secret].discard_room(pos)?;
                 game.discard.push(room);
-                if game.castles.values().all(|c| c.get_damage() == 0)
+                if castle.is_lost() {
+                    // Castle has discarded its last throne room
+                    // Removing lost players from the turn_order
+                    let index = game.get_player_turn_index(player_secret).unwrap();
+                    game.turn_order.remove(index);
+                    if index < game.turn_index {
+                        game.turn_index -= 1;
+                    }
+                    if game.turn_index >= game.turn_order.len() {
+                        game.round += 1;
+                        game.turn_index = 0;
+                    }
+                    castle = castle.clear_rooms();
+                }
+                game.castles.insert(player_secret.to_string(), castle);
+                if game
+                    .castles
+                    .values()
+                    .all(|c| c.get_damage() == 0 || c.is_lost())
                     && game.queued_disasters.len() > 0
                 {
                     let disaster = game.queued_disasters.pop().unwrap();
@@ -330,12 +338,10 @@ impl GameState {
                 redealt = true;
             }
         }
-        if disasters.len() == 0 {
-            return game;
+        if let Some(disaster) = disasters.pop() {
+            game = game.resolve_disaster(disaster);
+            game.queued_disasters = disasters;
         }
-        let disaster = disasters.pop().unwrap();
-        game = game.resolve_disaster(disaster);
-        game.queued_disasters = disasters;
         game
     }
     fn resolve_disaster(&self, disaster: Box<dyn Disaster>) -> GameState {
@@ -347,18 +353,22 @@ impl GameState {
         game.turn_order = game
             .turn_order
             .clone()
-            .iter()
+            .into_iter()
             .enumerate()
             .filter_map(|(index, secret)| {
-                let castle = game.castles.get_mut(secret).unwrap();
+                let castle = game.castles.get_mut(&secret).unwrap();
                 *castle = castle.deal_damage(diamond, cross, moon);
                 if castle.is_lost() {
+                    for room in castle.get_rooms().values() {
+                        game.discard.push(room.clone());
+                    }
+                    *castle = castle.clear_rooms();
                     if index < game.turn_index {
                         game.turn_index -= 1;
                     }
                     return None;
                 }
-                Some((*secret).clone())
+                Some(secret)
             })
             .collect();
         if game.turn_index >= game.turn_order.len() {

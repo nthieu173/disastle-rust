@@ -12,7 +12,7 @@ use disastle_castle_rust::{Action, Castle, Room};
 
 type Result<T> = result::Result<T, GameError>;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct SchrodingerGameState {
     pub castles: HashMap<String, Castle>,
     pub shop: Vec<Box<dyn Room>>,
@@ -54,10 +54,7 @@ impl SchrodingerGameState {
                 let room = game.shop.remove(index);
                 game.castles.insert(
                     player_secret.to_string(),
-                    game.castles
-                        .get(player_secret)
-                        .unwrap()
-                        .place_room(room, pos)?,
+                    game.castles[player_secret].place_room(room, pos)?,
                 );
                 game = game.next_turn();
                 Ok(game)
@@ -66,10 +63,7 @@ impl SchrodingerGameState {
                 let mut game = self.clone();
                 game.castles.insert(
                     player_secret.to_string(),
-                    game.castles
-                        .get(player_secret)
-                        .unwrap()
-                        .move_room(from, to)?,
+                    game.castles[player_secret].move_room(from, to)?,
                 );
                 game = game.next_turn();
                 Ok(game)
@@ -88,10 +82,27 @@ impl SchrodingerGameState {
             }
             Action::Discard(pos) => {
                 let mut game = self.clone();
-                let (castle, room) = game.castles.get(player_secret).unwrap().discard_room(pos)?;
-                game.castles.insert(player_secret.to_string(), castle);
+                let (mut castle, room) = game.castles[player_secret].discard_room(pos)?;
                 game.discard.push(room);
-                if game.castles.values().all(|c| c.get_damage() == 0)
+                if castle.is_lost() {
+                    // Castle has discarded its last throne room
+                    // Removing lost players from the turn_order
+                    let index = game.get_player_turn_index(player_secret).unwrap();
+                    game.turn_order.remove(index);
+                    if index < game.turn_index {
+                        game.turn_index -= 1;
+                    }
+                    if game.turn_index >= game.turn_order.len() {
+                        game.round += 1;
+                        game.turn_index = 0;
+                    }
+                    castle = castle.clear_rooms();
+                }
+                game.castles.insert(player_secret.to_string(), castle);
+                if game
+                    .castles
+                    .values()
+                    .all(|c| c.get_damage() == 0 || c.is_lost())
                     && game.queued_disasters.len() > 0
                 {
                     let disaster = game.queued_disasters.pop().unwrap();
@@ -124,10 +135,16 @@ impl SchrodingerGameState {
                 - disasters.len()
                 > 0
         {
-            let num_disasters_left = game.setting.num_disasters as usize
-                - game.previous_disasters.len()
-                - game.queued_disasters.len()
-                - disasters.len();
+            let num_disasters_left = if (game.setting.num_safe as usize)
+                > self.setting.rooms.len() - self.possible_rooms.len()
+            {
+                0 // Still safe rooms left
+            } else {
+                game.setting.num_disasters as usize
+                    - game.previous_disasters.len()
+                    - game.queued_disasters.len()
+                    - disasters.len()
+            };
             if game.rng.gen_ratio(
                 num_disasters_left as u32,
                 (game.possible_rooms.len() + num_disasters_left) as u32,
@@ -175,18 +192,22 @@ impl SchrodingerGameState {
         game.turn_order = game
             .turn_order
             .clone()
-            .iter()
+            .into_iter()
             .enumerate()
             .filter_map(|(index, secret)| {
-                let castle = game.castles.get_mut(secret).unwrap();
+                let castle = game.castles.get_mut(&secret).unwrap();
                 *castle = castle.deal_damage(diamond, cross, moon);
                 if castle.is_lost() {
+                    for room in castle.get_rooms().values() {
+                        game.discard.push(room.clone());
+                    }
+                    *castle = castle.clear_rooms();
                     if index < game.turn_index {
                         game.turn_index -= 1;
                     }
                     return None;
                 }
-                Some((*secret).clone())
+                Some(secret)
             })
             .collect();
         if game.turn_index >= game.turn_order.len() {

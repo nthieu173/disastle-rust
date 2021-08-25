@@ -1,4 +1,4 @@
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct PlayerInfo {
     pub name: String,
     pub secret: String,

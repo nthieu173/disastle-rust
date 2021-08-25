@@ -1,7 +1,10 @@
 mod simple_disaster;
 pub use simple_disaster::SimpleDisaster;
 
-use std::hash::{Hash, Hasher};
+use std::{
+    fmt,
+    hash::{Hash, Hasher},
+};
 
 pub trait Disaster: DisasterClone {
     fn get_name(&self) -> &str;
@@ -19,6 +22,30 @@ pub trait Disaster: DisasterClone {
     }
     fn moon_damage(&self, num_previous_disasters: u8) -> u8 {
         num_previous_disasters * self.moon_multiplier() + self.moon_addition()
+    }
+}
+
+impl fmt::Debug for dyn Disaster {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("Disaster")
+            .field("name", &self.get_name())
+            .field(
+                "diamond",
+                &format!(
+                    "x{}+{}",
+                    &self.diamond_multiplier(),
+                    &self.diamond_addition()
+                ),
+            )
+            .field(
+                "cross",
+                &format!("x{}+{}", &self.cross_multiplier(), &self.cross_addition()),
+            )
+            .field(
+                "moon",
+                &format!("x{}+{}", &self.moon_multiplier(), &self.moon_addition()),
+            )
+            .finish()
     }
 }
 
