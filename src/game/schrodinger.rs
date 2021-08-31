@@ -2,6 +2,7 @@ use rand::{rngs::ThreadRng, seq::IteratorRandom, Rng};
 use std::{
     cmp::Ordering,
     collections::{HashMap, HashSet},
+    hash::{Hash, Hasher},
     result,
 };
 
@@ -14,18 +15,53 @@ type Result<T> = result::Result<T, GameError>;
 
 #[derive(Clone, Debug)]
 pub struct SchrodingerGameState {
-    pub castles: HashMap<String, Castle>,
     pub shop: Vec<Room>,
     pub discard: Vec<Room>,
-    pub possible_rooms: HashSet<Room>,
     pub previous_disasters: Vec<Disaster>,
     pub queued_disasters: Vec<Disaster>,
-    pub possible_disasters: HashSet<Disaster>,
+    pub round: u8,
+    pub setting: GameSetting,
+    pub castles: HashMap<String, Castle>,
     pub turn_order: Vec<String>,
     pub turn_index: usize,
-    pub round: u8,
+    pub possible_rooms: HashSet<Room>,
+    pub possible_disasters: HashSet<Disaster>,
     pub rng: ThreadRng,
-    pub setting: GameSetting,
+}
+
+impl PartialEq for SchrodingerGameState {
+    fn eq(&self, other: &Self) -> bool {
+        self.shop == other.shop
+            && self.discard == other.discard
+            && self.previous_disasters == other.previous_disasters
+            && self.queued_disasters == other.queued_disasters
+            && self.round == other.round
+            && self.setting == other.setting
+            && self.castles == other.castles
+            && self.turn_order == other.turn_order
+            && self.turn_index == other.turn_index
+            && self.possible_rooms == other.possible_rooms
+            && self.possible_disasters == other.possible_disasters
+    }
+}
+
+impl Eq for SchrodingerGameState {}
+
+impl Hash for SchrodingerGameState {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        // Use the turn_order for a stable hash. If the turn order is different, the game state is probably different.
+        self.shop.hash(state);
+        self.discard.hash(state);
+        self.previous_disasters.hash(state);
+        self.queued_disasters.hash(state);
+        self.round.hash(state);
+        self.setting.hash(state);
+        for secret in self.turn_order.iter() {
+            self.castles.get(secret).unwrap().hash(state);
+        }
+        self.turn_order.hash(state);
+        self.turn_index.hash(state);
+    }
 }
 
 impl SchrodingerGameState {
