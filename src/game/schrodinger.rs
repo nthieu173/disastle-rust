@@ -29,6 +29,17 @@ pub struct SchrodingerGameState {
 }
 
 impl SchrodingerGameState {
+    pub fn all_players_possible_actions(&self) -> Vec<(String, Action)> {
+        self.turn_order
+            .iter()
+            .map(|secret| {
+                self.possible_actions(secret)
+                    .into_iter()
+                    .map(move |action| (secret.clone(), action))
+            })
+            .flatten()
+            .collect()
+    }
     pub fn possible_actions(&self, player_secret: &str) -> Vec<Action> {
         if let Some(castle) = self.castles.get(player_secret) {
             if castle.get_damage() != 0 || self.is_turn_player(player_secret) {
