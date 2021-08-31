@@ -23,7 +23,7 @@ pub use schrodinger::SchrodingerGameState;
 
 type Result<T> = result::Result<T, GameError>;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct GameState {
     pub shop: Vec<Room>,
     pub discard: Vec<Room>,
@@ -38,45 +38,40 @@ pub struct GameState {
     rng: ThreadRng,
 }
 
-impl Hash for GameState {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        // Use the turn_order for a stable hash. If the turn order is different, the game state is probably different.
-        for secret in self.turn_order.iter() {
-            self.castles.get(secret).unwrap().hash(state);
-        }
-        self.shop.hash(state);
-        self.discard.hash(state);
-        self.previous_disasters.hash(state);
-        self.queued_disasters.hash(state);
-        self.turn_index.hash(state);
-        self.round.hash(state);
-        self.setting.hash(state);
-    }
-}
-
 impl PartialEq for GameState {
-    fn eq(&self, other: &GameState) -> bool {
-        for secret in self.turn_order.iter() {
-            let castle = self.castles.get(secret).unwrap();
-            if let Some(other_castle) = other.castles.get(secret) {
-                if castle != other_castle {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
+    fn eq(&self, other: &Self) -> bool {
         self.shop == other.shop
             && self.discard == other.discard
             && self.previous_disasters == other.previous_disasters
             && self.queued_disasters == other.queued_disasters
-            && self.turn_index == other.turn_index
             && self.round == other.round
             && self.setting == other.setting
+            && self.castles == other.castles
+            && self.deck == other.deck
+            && self.turn_order == other.turn_order
+            && self.turn_index == other.turn_index
     }
 }
 
 impl Eq for GameState {}
+
+impl Hash for GameState {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        // Use the turn_order for a stable hash. If the turn order is different, the game state is probably different.
+        self.shop.hash(state);
+        self.discard.hash(state);
+        self.previous_disasters.hash(state);
+        self.queued_disasters.hash(state);
+        self.round.hash(state);
+        self.setting.hash(state);
+        for secret in self.turn_order.iter() {
+            self.castles.get(secret).unwrap().hash(state);
+        }
+        self.deck.hash(state);
+        self.turn_order.hash(state);
+        self.turn_index.hash(state);
+    }
+}
 
 #[derive(Clone, Debug)]
 pub struct GameSetting {
