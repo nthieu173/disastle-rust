@@ -278,11 +278,7 @@ impl GameState {
                 if castle.is_lost() {
                     // Castle has discarded its last throne room
                     // Removing lost players from the turn_order
-                    let index = game
-                        .turn_order
-                        .iter()
-                        .position(|s| s == player_secret)
-                        .unwrap();
+                    let index = game.get_player_turn_index(player_secret).unwrap();
                     game.turn_order.remove(index);
                     if index < game.turn_index {
                         game.turn_index -= 1;
@@ -445,5 +441,8 @@ impl GameState {
         } else {
             false
         }
+    }
+    pub fn get_player_turn_index(&self, secret: &str) -> Option<usize> {
+        self.turn_order.iter().position(|s| s == secret)
     }
 }
