@@ -138,12 +138,6 @@ impl GameState {
             setting: self.setting.clone(),
         }
     }
-    pub fn get_castles(&self) -> Vec<Castle> {
-        self.turn_order
-            .iter()
-            .map(|secret| self.castles.get(secret).unwrap().clone())
-            .collect()
-    }
     pub fn possible_actions(&self, player_secret: &str) -> Vec<Action> {
         if let Some(castle) = self.castles.get(player_secret) {
             if castle.damage != 0 || self.is_turn_player(player_secret) {
@@ -218,6 +212,7 @@ impl GameState {
                         game.turn_index = 0;
                     }
                     castle = castle.clear_rooms();
+                    castle.damage = 0;
                 }
                 game.castles.insert(player_secret.to_string(), castle);
                 if game.castles.values().all(|c| c.damage == 0 || c.is_lost())
