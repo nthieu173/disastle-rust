@@ -197,24 +197,10 @@ impl GameState {
             }
             Action::Discard(pos) => {
                 let mut game = self.clone();
-                let (mut castle, room) = game.castles[player_secret].discard_room(pos)?;
+                let (castle, room) = game.castles[player_secret].discard_room(pos)?;
                 game.discard.push(room);
-                if castle.is_lost() {
-                    // Castle has discarded its last throne room
-                    // Removing lost players from the turn_order
-                    let index = game.get_player_turn_index(player_secret).unwrap();
-                    game.turn_order.remove(index);
-                    if index < game.turn_index {
-                        game.turn_index -= 1;
-                    }
-                    if game.turn_index >= game.turn_order.len() {
-                        game.round += 1;
-                        game.turn_index = 0;
-                    }
-                    castle = castle.clear_rooms();
-                    castle.damage = 0;
-                }
                 game.castles.insert(player_secret.to_string(), castle);
+                game.sweep_lost_castles();
                 if game.castles.values().all(|c| c.damage == 0 || c.is_lost())
                     && game.queued_disasters.len() > 0
                 {
@@ -266,37 +252,33 @@ impl GameState {
         }
         game
     }
+    fn sweep_lost_castles(&mut self) {
+        let mut turn_order = Vec::new();
+        for (index, secret) in self.turn_order.iter().enumerate() {
+            let castle = &self.castles[secret];
+            if !castle.is_lost() {
+                turn_order.push(secret.to_string());
+            } else {
+                if index < self.turn_index {
+                    self.turn_index -= 1;
+                }
+            }
+        }
+        if self.turn_index >= turn_order.len() {
+            self.turn_index = 0;
+        }
+        self.turn_order = turn_order;
+    }
     fn resolve_disaster(&self, disaster: Disaster) -> GameState {
         let mut game = self.clone();
         let diamond = disaster.diamond_damage(game.previous_disasters.len() as u8);
         let cross = disaster.cross_damage(game.previous_disasters.len() as u8);
         let moon = disaster.moon_damage(game.previous_disasters.len() as u8);
-        // Removing lost players from the turn_order
-        game.turn_order = game
-            .turn_order
-            .clone()
-            .into_iter()
-            .enumerate()
-            .filter_map(|(index, secret)| {
-                let castle = game.castles.get_mut(&secret).unwrap();
-                *castle = castle.deal_damage(diamond, cross, moon);
-                if castle.is_lost() {
-                    for room in castle.rooms.values() {
-                        game.discard.push(room.clone());
-                    }
-                    *castle = castle.clear_rooms();
-                    if index < game.turn_index {
-                        game.turn_index -= 1;
-                    }
-                    return None;
-                }
-                Some(secret)
-            })
-            .collect();
-        if game.turn_index >= game.turn_order.len() {
-            game.round += 1;
-            game.turn_index = 0;
+        for secret in game.turn_order.iter() {
+            let castle = game.castles.get_mut(secret).unwrap();
+            *castle = castle.deal_damage(diamond, cross, moon);
         }
+        game.sweep_lost_castles();
         game.previous_disasters.push(disaster);
         game
     }
