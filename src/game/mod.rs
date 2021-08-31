@@ -25,17 +25,17 @@ type Result<T> = result::Result<T, GameError>;
 
 #[derive(Clone)]
 pub struct GameState {
+    pub shop: Vec<Room>,
+    pub discard: Vec<Room>,
+    pub previous_disasters: Vec<Disaster>,
+    pub queued_disasters: Vec<Disaster>,
+    pub round: u8,
+    pub setting: GameSetting,
     castles: HashMap<String, Castle>,
-    shop: Vec<Box<dyn Room>>,
-    discard: Vec<Box<dyn Room>>,
     deck: Vec<Card>,
-    previous_disasters: Vec<Box<dyn Disaster>>,
-    queued_disasters: Vec<Box<dyn Disaster>>,
     turn_order: Vec<String>,
     turn_index: usize,
-    round: u8,
     rng: ThreadRng,
-    setting: GameSetting,
 }
 
 impl Hash for GameState {
@@ -83,9 +83,9 @@ pub struct GameSetting {
     pub num_safe: u8,
     pub num_shop: u8,
     pub num_disasters: u8,
-    pub thrones: HashSet<Box<dyn Room>>,
-    pub rooms: HashSet<Box<dyn Room>>,
-    pub disasters: HashSet<Box<dyn Disaster>>,
+    pub thrones: HashSet<Room>,
+    pub rooms: HashSet<Room>,
+    pub disasters: HashSet<Disaster>,
 }
 
 impl PartialEq for GameSetting {
@@ -116,7 +116,7 @@ impl GameState {
         }
         let players = players_map;
         let mut rng = rand::thread_rng();
-        let mut deck: Vec<Box<dyn Room>> = setting.rooms.clone().into_iter().collect();
+        let mut deck: Vec<Room> = setting.rooms.clone().into_iter().collect();
         deck.shuffle(&mut rng);
         let mut safe = deck
             .drain(deck.len() - setting.num_safe as usize..)
@@ -145,7 +145,7 @@ impl GameState {
                 }
             }
         }
-        let mut thrones: Vec<Box<dyn Room>> = setting
+        let mut thrones: Vec<Room> = setting
             .thrones
             .clone()
             .into_iter()
@@ -278,7 +278,11 @@ impl GameState {
                 if castle.is_lost() {
                     // Castle has discarded its last throne room
                     // Removing lost players from the turn_order
-                    let index = game.get_player_turn_index(player_secret).unwrap();
+                    let index = game
+                        .turn_order
+                        .iter()
+                        .position(|s| s == player_secret)
+                        .unwrap();
                     game.turn_order.remove(index);
                     if index < game.turn_index {
                         game.turn_index -= 1;
@@ -344,7 +348,7 @@ impl GameState {
         }
         game
     }
-    fn resolve_disaster(&self, disaster: Box<dyn Disaster>) -> GameState {
+    fn resolve_disaster(&self, disaster: Disaster) -> GameState {
         let mut game = self.clone();
         let diamond = disaster.diamond_damage(game.previous_disasters.len() as u8);
         let cross = disaster.cross_damage(game.previous_disasters.len() as u8);
@@ -435,35 +439,11 @@ impl GameState {
     }
     pub fn is_turn_player(&self, secret: &str) -> bool {
         if self.turn_order[self.turn_index] == secret {
-            return true;
+            true
+        } else if let Some(castle) = self.castles.get(secret) {
+            castle.get_damage() > 0
+        } else {
+            false
         }
-        if let Some(castle) = self.castles.get(secret) {
-            return castle.get_damage() > 0;
-        }
-        false
-    }
-    pub fn get_turn_index(&self) -> usize {
-        self.turn_index
-    }
-    pub fn get_player_turn_index(&self, secret: &str) -> Result<usize> {
-        if !self.castles.contains_key(secret) {
-            return Err(GameError::InvalidPlayer);
-        }
-        Ok(self.turn_order.iter().position(|s| s == secret).unwrap())
-    }
-    pub fn view_shop(&self) -> &Vec<Box<dyn Room>> {
-        &self.shop
-    }
-    pub fn view_discard(&self) -> &Vec<Box<dyn Room>> {
-        &self.discard
-    }
-    pub fn view_previous_disasters(&self) -> &Vec<Box<dyn Disaster>> {
-        &self.previous_disasters
-    }
-    pub fn view_queued_disasters(&self) -> &Vec<Box<dyn Disaster>> {
-        &self.queued_disasters
-    }
-    pub fn get_setting(&self) -> &GameSetting {
-        &self.setting
     }
 }

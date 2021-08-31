@@ -1,8 +1,8 @@
 pub mod disaster;
 pub mod game;
 
-use disaster::SimpleDisaster;
-use disastle_castle_rust::SimpleRoom;
+use disaster::Disaster;
+use disastle_castle_rust::Room;
 pub use ron;
 use std::{
     fs::File,
@@ -11,7 +11,7 @@ use std::{
     result,
 };
 
-pub fn load_disasters(path: &Path) -> result::Result<Vec<SimpleDisaster>, io::Error> {
+pub fn load_disasters(path: &Path) -> result::Result<Vec<Disaster>, io::Error> {
     let mut file = File::open(path)?;
     let mut content = String::new();
     file.read_to_string(&mut content)?;
@@ -21,7 +21,7 @@ pub fn load_disasters(path: &Path) -> result::Result<Vec<SimpleDisaster>, io::Er
     }
 }
 
-pub fn load_rooms(path: &Path) -> result::Result<Vec<SimpleRoom>, io::Error> {
+pub fn load_rooms(path: &Path) -> result::Result<Vec<Room>, io::Error> {
     let mut file = File::open(path)?;
     let mut content = String::new();
     file.read_to_string(&mut content)?;

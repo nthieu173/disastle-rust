@@ -15,12 +15,12 @@ type Result<T> = result::Result<T, GameError>;
 #[derive(Clone, Debug)]
 pub struct SchrodingerGameState {
     pub castles: HashMap<String, Castle>,
-    pub shop: Vec<Box<dyn Room>>,
-    pub discard: Vec<Box<dyn Room>>,
-    pub possible_rooms: HashSet<Box<dyn Room>>,
-    pub previous_disasters: Vec<Box<dyn Disaster>>,
-    pub queued_disasters: Vec<Box<dyn Disaster>>,
-    pub possible_disasters: HashSet<Box<dyn Disaster>>,
+    pub shop: Vec<Room>,
+    pub discard: Vec<Room>,
+    pub possible_rooms: HashSet<Room>,
+    pub previous_disasters: Vec<Disaster>,
+    pub queued_disasters: Vec<Disaster>,
+    pub possible_disasters: HashSet<Disaster>,
     pub turn_order: Vec<String>,
     pub turn_index: usize,
     pub round: u8,
@@ -183,7 +183,7 @@ impl SchrodingerGameState {
         game.queued_disasters = disasters;
         game
     }
-    fn resolve_disaster(&self, disaster: Box<dyn Disaster>) -> SchrodingerGameState {
+    fn resolve_disaster(&self, disaster: Disaster) -> SchrodingerGameState {
         let mut game = self.clone();
         let diamond = disaster.diamond_damage(game.previous_disasters.len() as u8);
         let cross = disaster.cross_damage(game.previous_disasters.len() as u8);
@@ -272,7 +272,13 @@ impl SchrodingerGameState {
         self.castles.contains_key(secret)
     }
     pub fn is_turn_player(&self, secret: &str) -> bool {
-        self.turn_order[self.turn_index] == secret
+        if self.turn_order[self.turn_index] == secret {
+            true
+        } else if let Some(castle) = self.castles.get(secret) {
+            castle.get_damage() > 0
+        } else {
+            false
+        }
     }
     pub fn get_turn_index(&self) -> usize {
         self.turn_index

@@ -1,698 +1,698 @@
 [
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Hallway",
         rotation: 0,
         connections: (None, Cross(false), None, Diamond(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Hallway",
         rotation: 0,
         connections: (None, Moon(false), None, Cross(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Hallway",
         rotation: 0,
         connections: (None, Cross(false), None, Cross(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Hallway",
         rotation: 0,
         connections: (None, Moon(false), None, Cross(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Hallway",
         rotation: 0,
         connections: (None, Moon(false), None, Diamond(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Hallway",
         rotation: 0,
         connections: (None, Diamond(false), None, Moon(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Hallway",
         rotation: 0,
         connections: (None, Moon(false), None, Moon(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Staircase",
         rotation: 0,
         connections: (Cross(false), None, Moon(false), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Staircase",
         rotation: 0,
         connections: (Diamond(false), None, Moon(false), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Staircase",
         rotation: 0,
         connections: (Cross(false), None, Diamond(false), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Staircase",
         rotation: 0,
         connections: (Cross(false), None, Cross(false), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Staircase",
         rotation: 0,
         connections: (Moon(false), None, Moon(false), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Staircase",
         rotation: 0,
         connections: (Moon(false), None, Cross(false), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Staircase",
         rotation: 0,
         connections: (Moon(false), None, Diamond(false), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Corridor",
         rotation: 0,
         connections: (None, None, Diamond(false), Moon(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Corridor",
         rotation: 0,
         connections: (Cross(false), Diamond(false), None, None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Corridor",
         rotation: 0,
         connections: (Cross(false), None, None, Cross(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Corridor",
         rotation: 0,
         connections: (None, None, Cross(false), Diamond(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Corridor",
         rotation: 0,
         connections: (None, Diamond(false), Moon(false), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Corridor",
         rotation: 0,
         connections: (Cross(false), None, None, Diamond(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Black Market",
         rotation: 0,
         connections: (Diamond(false), Diamond(true), None, None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Divination Chamber",
         rotation: 0,
         connections: (None, None, Cross(true), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Merchants Guild",
         rotation: 0,
         connections: (None, Diamond(true), Diamond(false), Moon(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Wormhole Generator",
         rotation: 0,
         connections: (Moon(true), Diamond(false), Moon(true), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Doomsayer",
         rotation: 0,
         connections: (Moon(true), None, Moon(false), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Antigravity Cannon",
         rotation: 0,
         connections: (Cross(true), None, Moon(true), Diamond(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Time Machine",
         rotation: 0,
         connections: (Diamond(true), None, None, Moon(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Soothsayer",
         rotation: 0,
         connections: (Diamond(true), Cross(false), None, None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Architect",
         rotation: 0,
         connections: (None, Cross(true), None, Diamond(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Interior Decorator",
         rotation: 0,
         connections: (None, None, Moon(true), Moon(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Treasury",
         rotation: 0,
         connections: (Moon(false), Diamond(true), Cross(true), Moon(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Market",
         rotation: 0,
         connections: (Diamond(true), Cross(false), Moon(false), Cross(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Energy Core",
         rotation: 0,
         connections: (Moon(true), Moon(true), Diamond(true), Moon(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Gravity Generator",
         rotation: 0,
         connections: (Moon(true), Cross(true), Cross(true), Diamond(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Reinforced Walls",
         rotation: 0,
         connections: (Moon(true), Cross(true), Cross(true), Diamond(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Gravitational Anchor",
         rotation: 0,
         connections: (None, Diamond(true), None, Diamond(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Tavern",
         rotation: 0,
         connections: (Diamond(true), None, Diamond(true), Cross(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Echo Chamber",
         rotation: 0,
         connections: (Diamond(true), Diamond(false), Cross(false), Moon(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Armorer",
         rotation: 0,
         connections: (None, Cross(true), None, Diamond(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Generator",
         rotation: 0,
         connections: (None, None, Moon(true), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Generator",
         rotation: 0,
         connections: (None, Cross(true), None, None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Safe Room",
         rotation: 0,
         connections: (Diamond(true), Cross(true), None, Cross(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Bunker",
         rotation: 0,
         connections: (Diamond(true), Cross(true), Diamond(true), Cross(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Rooms With Legs",
         rotation: 0,
         connections: (Moon(false), Diamond(true), None, Cross(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Spinning Chamber",
         rotation: 0,
         connections: (Diamond(false), Cross(false), Moon(false), Moon(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Warping Chamber",
         rotation: 0,
         connections: (None, Diamond(false), Cross(false), Moon(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Imposter",
         rotation: 0,
         connections: (None, None, Moon(false), Cross(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Commander's Chamber",
         rotation: 0,
         connections: (Cross(true), Diamond(true), Cross(true), Cross(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Engineers Workshop",
         rotation: 0,
         connections: (None, Moon(true), Cross(false), Diamond(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Pilot's Quarter",
         rotation: 0,
         connections: (Moon(false), Moon(true), None, Diamond(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Candy Shop",
         rotation: 0,
         connections: (Moon(true), None, None, Cross(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Swimming Pool",
         rotation: 0,
         connections: (None, Diamond(false), Cross(true), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Petting Zoo",
         rotation: 0,
         connections: (Diamond(false), Moon(true), None, None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Movie Theatre",
         rotation: 0,
         connections: (None, None, Cross(false), Moon(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Nuclear Reactor",
         rotation: 0,
         connections: (None, Diamond(true), None, Diamond(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Mercenery",
         rotation: 0,
         connections: (None, Diamond(true), Cross(true), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Mercenery",
         rotation: 0,
         connections: (Cross(true), None, Cross(true), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Mercenery",
         rotation: 0,
         connections: (Moon(true), None, None, Diamond(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Mercenery",
         rotation: 0,
         connections: (None, Diamond(true), None, Cross(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Giant Fan",
         rotation: 0,
         connections: (Diamond(true), Moon(true), None, Diamond(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Giant Fan",
         rotation: 0,
         connections: (Diamond(false), Cross(true), Diamond(true), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Construction Crew",
         rotation: 0,
         connections: (Cross(true), Moon(true), Cross(false), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Rocket Engineer",
         rotation: 0,
         connections: (Moon(true), None, None, Diamond(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Rocket Engineer",
         rotation: 0,
         connections: (None, Diamond(true), Diamond(false), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Shuttle",
         rotation: 0,
         connections: (Moon(true), Moon(false), None, None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Shuttle",
         rotation: 0,
         connections: (None, None, Moon(true), Cross(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Warp Cannon",
         rotation: 0,
         connections: (None, Moon(true), None, Cross(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Warp Cannon",
         rotation: 0,
         connections: (Diamond(false), None, Diamond(false), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Warp Cannon",
         rotation: 0,
         connections: (None, None, Moon(true), Diamond(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Hydraulic Arm",
         rotation: 0,
         connections: (None, Diamond(true), Diamond(true), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Hydraulic Arm",
         rotation: 0,
         connections: (Diamond(true), None, None, Diamond(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Watch Tower",
         rotation: 0,
         connections: (Moon(false), None, Diamond(true), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Homeowners Association",
         rotation: 0,
         connections: (Cross(true), Diamond(false), Cross(true), Diamond(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Unhappy Neighbor",
         rotation: 0,
         connections: (None, Moon(true), Cross(false), Cross(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Disco",
         rotation: 0,
         connections: (Cross(false), Cross(true), Diamond(false), Moon(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 3,
         name: "Big Vault",
         rotation: 0,
         connections: (None, Cross(true), Moon(true), Diamond(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 3,
         name: "Big Vault",
         rotation: 0,
         connections: (Diamond(false), Cross(true), None, Moon(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 3,
         name: "Big Vault",
         rotation: 0,
         connections: (Diamond(false), None, Moon(true), Cross(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 3,
         name: "Big Vault",
         rotation: 0,
         connections: (Cross(true), Moon(true), Diamond(false), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 5,
         name: "Large Vault",
         rotation: 0,
         connections: (Moon(false), Moon(true), Moon(true), Diamond(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 5,
         name: "Large Vault",
         rotation: 0,
         connections: (Cross(true), Moon(false), Diamond(true), Cross(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 2,
         name: "Medium Vault",
         rotation: 0,
         connections: (None, None, Diamond(true), Moon(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 2,
         name: "Medium Vault",
         rotation: 0,
         connections: (None, Cross(false), Moon(true), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 2,
         name: "Medium Vault",
         rotation: 0,
         connections: (Diamond(false), None, Diamond(true), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 2,
         name: "Medium Vault",
         rotation: 0,
         connections: (Cross(true), Moon(false), None, None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 2,
         name: "Medium Vault",
         rotation: 0,
         connections: (Moon(true), None, None, Moon(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 2,
         name: "Medium Vault",
         rotation: 0,
         connections: (None, Moon(false), None, Diamond(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 1,
         name: "Small Vault",
         rotation: 0,
         connections: (None, None, None, Cross(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 1,
         name: "Small Vault",
         rotation: 0,
         connections: (None, Diamond(false), None, None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 1,
         name: "Small Vault",
         rotation: 0,
         connections: (None, None, Moon(false), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 1,
         name: "Small Vault",
         rotation: 0,
         connections: (Cross(false), None, None, None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 3,
         name: "Briber's Vault",
         rotation: 0,
         connections: (Diamond(true), None, None, Cross(false))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 3,
         name: "Briber's Vault",
         rotation: 0,
         connections: (Diamond(true), Moon(false), None, None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 7,
         name: "Cold Vault",
         rotation: 0,
         connections: (Moon(true), Moon(false), Diamond(true), Cross(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Dynamic Vault",
         rotation: 0,
         connections: (Moon(true), Cross(true), Diamond(true), Moon(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Entropic Vault",
         rotation: 0,
         connections: (Diamond(true), Cross(false), Cross(true), Moon(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Candy Vault",
         rotation: 0,
         connections: (Cross(true), Moon(true), Moon(true), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Lonely Vault",
         rotation: 0,
         connections: (Cross(false), None, Cross(true), None)
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Lonely Vault",
         rotation: 0,
         connections: (None, Moon(false), None, Moon(true))
     ),
-    SimpleRoom(
+    Room(
         throne: false,
         treasure: 0,
         name: "Nuclear Vault",

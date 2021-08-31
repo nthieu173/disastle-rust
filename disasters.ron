@@ -1,5 +1,5 @@
 [
-    SimpleDisaster(
+    Disaster(
         name: "Nuclear Meltdown",
         diamond: DamageCalculation(
             multiplier: 1,
@@ -14,7 +14,7 @@
             addition: 2
         )
     ),
-    SimpleDisaster(
+    Disaster(
         name: "Nebula Drake",
         diamond: DamageCalculation(
             multiplier: 1,
@@ -29,7 +29,7 @@
             addition: 0
         )
     ),
-    SimpleDisaster(
+    Disaster(
         name: "Gas Explosion",
         diamond: DamageCalculation(
             multiplier: 1,
@@ -44,7 +44,7 @@
             addition: 1
         )
     ),
-    SimpleDisaster(
+    Disaster(
         name: "Meteor",
         diamond: DamageCalculation(
             multiplier: 1,
@@ -59,7 +59,7 @@
             addition: 0
         )
     ),
-    SimpleDisaster(
+    Disaster(
         name: "Magmaquake",
         diamond: DamageCalculation(
             multiplier: 1,
@@ -74,7 +74,7 @@
             addition: 1
         )
     ),
-    SimpleDisaster(
+    Disaster(
         name: "Entropy Demon",
         diamond: DamageCalculation(
             multiplier: 1,
@@ -89,7 +89,7 @@
             addition: 2
         )
     ),
-    SimpleDisaster(
+    Disaster(
         name: "Verdant Chaos",
         diamond: DamageCalculation(
             multiplier: 0,
@@ -104,7 +104,7 @@
             addition: 1
         )
     ),
-    SimpleDisaster(
+    Disaster(
         name: "Aurora Whale",
         diamond: DamageCalculation(
             multiplier: 1,
@@ -119,7 +119,7 @@
             addition: 1
         )
     ),
-    SimpleDisaster(
+    Disaster(
         name: "Space Bees",
         diamond: DamageCalculation(
             multiplier: 0,
@@ -134,7 +134,7 @@
             addition: 0
         )
     ),
-    SimpleDisaster(
+    Disaster(
         name: "Aurora Veil",
         diamond: DamageCalculation(
             multiplier: 0,
@@ -149,7 +149,7 @@
             addition: 0
         )
     ),
-    SimpleDisaster(
+    Disaster(
         name: "Warp Storm",
         diamond: DamageCalculation(
             multiplier: 0,
@@ -164,7 +164,7 @@
             addition: 1
         )
     ),
-    SimpleDisaster(
+    Disaster(
         name: "Ionic Tornado",
         diamond: DamageCalculation(
             multiplier: 1,
