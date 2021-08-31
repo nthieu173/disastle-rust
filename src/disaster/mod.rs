@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::{fmt, hash::Hash};
 
-#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, Eq, Hash)]
+#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, Eq, Hash, Ord, PartialOrd)]
 pub struct Disaster {
     pub name: String,
     pub diamond: DamageCalculation,
@@ -41,7 +41,7 @@ impl fmt::Display for Disaster {
     }
 }
 
-#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, Eq, Hash)]
+#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, Eq, Hash, Ord, PartialOrd)]
 pub struct DamageCalculation {
     pub multiplier: u8,
     pub addition: u8,

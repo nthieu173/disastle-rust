@@ -1,8 +1,9 @@
-use rand::{rngs::ThreadRng, seq::IteratorRandom, Rng};
+use rand::{seq::IteratorRandom, thread_rng, Rng};
+use serde::{Deserialize, Serialize};
 use std::{
     cmp::Ordering,
-    collections::{HashMap, HashSet},
-    hash::{Hash, Hasher},
+    collections::{BTreeMap, BTreeSet},
+    hash::Hash,
     result,
 };
 
@@ -13,7 +14,7 @@ use disastle_castle_rust::{Action, Castle, Room};
 
 type Result<T> = result::Result<T, GameError>;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Serialize, Deserialize)]
 pub struct SchrodingerGameState {
     pub shop: Vec<Room>,
     pub discard: Vec<Room>,
@@ -21,47 +22,11 @@ pub struct SchrodingerGameState {
     pub queued_disasters: Vec<Disaster>,
     pub round: u8,
     pub setting: GameSetting,
-    pub castles: HashMap<String, Castle>,
+    pub castles: BTreeMap<String, Castle>,
     pub turn_order: Vec<String>,
     pub turn_index: usize,
-    pub possible_rooms: HashSet<Room>,
-    pub possible_disasters: HashSet<Disaster>,
-    pub rng: ThreadRng,
-}
-
-impl PartialEq for SchrodingerGameState {
-    fn eq(&self, other: &Self) -> bool {
-        self.shop == other.shop
-            && self.discard == other.discard
-            && self.previous_disasters == other.previous_disasters
-            && self.queued_disasters == other.queued_disasters
-            && self.round == other.round
-            && self.setting == other.setting
-            && self.castles == other.castles
-            && self.turn_order == other.turn_order
-            && self.turn_index == other.turn_index
-            && self.possible_rooms == other.possible_rooms
-            && self.possible_disasters == other.possible_disasters
-    }
-}
-
-impl Eq for SchrodingerGameState {}
-
-impl Hash for SchrodingerGameState {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        // Use the turn_order for a stable hash. If the turn order is different, the game state is probably different.
-        self.shop.hash(state);
-        self.discard.hash(state);
-        self.previous_disasters.hash(state);
-        self.queued_disasters.hash(state);
-        self.round.hash(state);
-        self.setting.hash(state);
-        for secret in self.turn_order.iter() {
-            self.castles.get(secret).unwrap().hash(state);
-        }
-        self.turn_order.hash(state);
-        self.turn_index.hash(state);
-    }
+    pub possible_rooms: BTreeSet<Room>,
+    pub possible_disasters: BTreeSet<Disaster>,
 }
 
 impl SchrodingerGameState {
@@ -78,7 +43,7 @@ impl SchrodingerGameState {
     }
     pub fn possible_actions(&self, player_secret: &str) -> Vec<Action> {
         if let Some(castle) = self.castles.get(player_secret) {
-            if castle.get_damage() != 0 || self.is_turn_player(player_secret) {
+            if castle.damage != 0 || self.is_turn_player(player_secret) {
                 return castle.possible_actions(&self.shop);
             }
         }
@@ -86,7 +51,7 @@ impl SchrodingerGameState {
     }
     pub fn action(&self, player_secret: &str, action: Action) -> Result<SchrodingerGameState> {
         if let Some(castle) = self.castles.get(player_secret) {
-            if castle.get_damage() == 0 && !self.is_turn_player(player_secret) {
+            if castle.damage == 0 && !self.is_turn_player(player_secret) {
                 return Err(GameError::NotTurnPlayer);
             }
         } else {
@@ -146,10 +111,7 @@ impl SchrodingerGameState {
                     castle = castle.clear_rooms();
                 }
                 game.castles.insert(player_secret.to_string(), castle);
-                if game
-                    .castles
-                    .values()
-                    .all(|c| c.get_damage() == 0 || c.is_lost())
+                if game.castles.values().all(|c| c.damage == 0 || c.is_lost())
                     && game.queued_disasters.len() > 0
                 {
                     let disaster = game.queued_disasters.pop().unwrap();
@@ -192,14 +154,14 @@ impl SchrodingerGameState {
                     - game.queued_disasters.len()
                     - disasters.len()
             };
-            if game.rng.gen_ratio(
+            if thread_rng().gen_ratio(
                 num_disasters_left as u32,
                 (game.possible_rooms.len() + num_disasters_left) as u32,
             ) {
                 let disaster = game
                     .possible_disasters
                     .iter()
-                    .choose(&mut game.rng)
+                    .choose(&mut thread_rng())
                     .unwrap()
                     .clone();
                 game.possible_disasters.remove(&disaster);
@@ -208,7 +170,7 @@ impl SchrodingerGameState {
                 let room = game
                     .possible_rooms
                     .iter()
-                    .choose(&mut game.rng)
+                    .choose(&mut thread_rng())
                     .unwrap()
                     .clone();
                 game.possible_rooms.remove(&room);
@@ -245,7 +207,7 @@ impl SchrodingerGameState {
                 let castle = game.castles.get_mut(&secret).unwrap();
                 *castle = castle.deal_damage(diamond, cross, moon);
                 if castle.is_lost() {
-                    for room in castle.get_rooms().values() {
+                    for room in castle.rooms.values() {
                         game.discard.push(room.clone());
                     }
                     *castle = castle.clear_rooms();
@@ -275,9 +237,9 @@ fn compare_game_state(a: &Castle, b: &Castle) -> Ordering {
     } else if a.get_treasure() < b.get_treasure() {
         return Ordering::Less;
     } else {
-        if a.get_rooms().len() > b.get_rooms().len() {
+        if a.rooms.len() > b.rooms.len() {
             return Ordering::Greater;
-        } else if a.get_rooms().len() < b.get_rooms().len() {
+        } else if a.rooms.len() < b.rooms.len() {
             return Ordering::Less;
         } else {
             let (diamond, cross, moon, wild) = a.get_links();
@@ -322,7 +284,7 @@ impl SchrodingerGameState {
         if self.turn_order[self.turn_index] == secret {
             true
         } else if let Some(castle) = self.castles.get(secret) {
-            castle.get_damage() > 0
+            castle.damage > 0
         } else {
             false
         }

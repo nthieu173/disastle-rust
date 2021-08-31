@@ -1,29 +1,27 @@
 mod card;
 mod error;
-pub mod player;
 mod schrodinger;
 
+use rand::{prelude::IteratorRandom, seq::SliceRandom, thread_rng};
+use serde::{Deserialize, Serialize};
 use std::{
     cmp::Ordering,
-    collections::{HashMap, HashSet},
-    hash::{Hash, Hasher},
+    collections::{BTreeMap, BTreeSet},
+    hash::Hash,
     iter::Iterator,
     result,
 };
-
-use rand::{prelude::IteratorRandom, rngs::ThreadRng, seq::SliceRandom};
 
 pub use error::GameError;
 
 pub use crate::disaster::Disaster;
 use card::Card;
 use disastle_castle_rust::{Action, Castle, Room};
-use player::PlayerInfo;
 pub use schrodinger::SchrodingerGameState;
 
 type Result<T> = result::Result<T, GameError>;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Hash, PartialEq, Eq, Ord, PartialOrd, Serialize, Deserialize)]
 pub struct GameState {
     pub shop: Vec<Room>,
     pub discard: Vec<Room>,
@@ -31,85 +29,24 @@ pub struct GameState {
     pub queued_disasters: Vec<Disaster>,
     pub round: u8,
     pub setting: GameSetting,
-    castles: HashMap<String, Castle>,
+    castles: BTreeMap<String, Castle>,
     deck: Vec<Card>,
     turn_order: Vec<String>,
     turn_index: usize,
-    rng: ThreadRng,
 }
 
-impl PartialEq for GameState {
-    fn eq(&self, other: &Self) -> bool {
-        self.shop == other.shop
-            && self.discard == other.discard
-            && self.previous_disasters == other.previous_disasters
-            && self.queued_disasters == other.queued_disasters
-            && self.round == other.round
-            && self.setting == other.setting
-            && self.castles == other.castles
-            && self.deck == other.deck
-            && self.turn_order == other.turn_order
-            && self.turn_index == other.turn_index
-    }
-}
-
-impl Eq for GameState {}
-
-impl Hash for GameState {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        // Use the turn_order for a stable hash. If the turn order is different, the game state is probably different.
-        self.shop.hash(state);
-        self.discard.hash(state);
-        self.previous_disasters.hash(state);
-        self.queued_disasters.hash(state);
-        self.round.hash(state);
-        self.setting.hash(state);
-        for secret in self.turn_order.iter() {
-            self.castles.get(secret).unwrap().hash(state);
-        }
-        self.deck.hash(state);
-        self.turn_order.hash(state);
-        self.turn_index.hash(state);
-    }
-}
-
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Hash, PartialEq, Eq, Ord, PartialOrd, Serialize, Deserialize)]
 pub struct GameSetting {
     pub num_safe: u8,
     pub num_shop: u8,
     pub num_disasters: u8,
-    pub thrones: HashSet<Room>,
-    pub rooms: HashSet<Room>,
-    pub disasters: HashSet<Disaster>,
-}
-
-impl PartialEq for GameSetting {
-    // Let's hope that rooms and disasters don't change.
-    fn eq(&self, other: &GameSetting) -> bool {
-        self.num_safe == other.num_safe
-            && self.num_shop == other.num_shop
-            && self.num_disasters == other.num_disasters
-    }
-}
-
-impl Eq for GameSetting {}
-
-impl Hash for GameSetting {
-    // Let's hope that rooms and disasters don't change.
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.num_safe.hash(state);
-        self.num_shop.hash(state);
-        self.num_disasters.hash(state);
-    }
+    pub thrones: BTreeSet<Room>,
+    pub rooms: BTreeSet<Room>,
+    pub disasters: BTreeSet<Disaster>,
 }
 
 impl GameState {
-    pub fn new(players: &Vec<PlayerInfo>, setting: GameSetting) -> GameState {
-        let mut players_map = HashMap::new();
-        for player in players {
-            players_map.insert(player.secret.clone(), player);
-        }
-        let players = players_map;
+    pub fn new(players: Vec<String>, setting: GameSetting) -> GameState {
         let mut rng = rand::thread_rng();
         let mut deck: Vec<Room> = setting.rooms.clone().into_iter().collect();
         deck.shuffle(&mut rng);
@@ -145,11 +82,11 @@ impl GameState {
             .clone()
             .into_iter()
             .choose_multiple(&mut rng, players.len());
-        let mut castles = HashMap::new();
+        let mut castles = BTreeMap::new();
         let mut turn_order = Vec::new();
-        for secret in players.keys() {
+        for secret in players {
             castles.insert(secret.clone(), Castle::new(thrones.pop().unwrap()));
-            turn_order.push(secret.clone());
+            turn_order.push(secret);
         }
         turn_order.shuffle(&mut rng);
         GameState {
@@ -162,13 +99,12 @@ impl GameState {
             turn_order,
             turn_index: 0,
             round: 0,
-            rng,
             setting,
         }
     }
     pub fn to_schrodinger(&self) -> SchrodingerGameState {
         let mut new_turn_order = Vec::new();
-        let mut new_castles = HashMap::new();
+        let mut new_castles = BTreeMap::new();
         let mut possible_rooms = self.setting.rooms.clone();
         for room in self.discard.iter() {
             possible_rooms.remove(room);
@@ -176,7 +112,7 @@ impl GameState {
         for (index, secret) in self.turn_order.iter().enumerate() {
             new_turn_order.push(index.to_string());
             let castle = self.castles.get(secret).unwrap().clone();
-            for room in castle.get_rooms().values() {
+            for room in castle.rooms.values() {
                 possible_rooms.remove(room);
             }
             new_castles.insert(index.to_string(), castle);
@@ -199,7 +135,6 @@ impl GameState {
             turn_order: new_turn_order,
             turn_index: self.turn_index,
             round: self.round,
-            rng: self.rng.clone(),
             setting: self.setting.clone(),
         }
     }
@@ -211,7 +146,7 @@ impl GameState {
     }
     pub fn possible_actions(&self, player_secret: &str) -> Vec<Action> {
         if let Some(castle) = self.castles.get(player_secret) {
-            if castle.get_damage() != 0 || self.is_turn_player(player_secret) {
+            if castle.damage != 0 || self.is_turn_player(player_secret) {
                 return castle.possible_actions(&self.shop);
             }
         }
@@ -219,7 +154,7 @@ impl GameState {
     }
     pub fn action(&self, player_secret: &str, action: Action) -> Result<GameState> {
         if let Some(castle) = self.castles.get(player_secret) {
-            if castle.get_damage() == 0 && !self.is_turn_player(player_secret) {
+            if castle.damage == 0 && !self.is_turn_player(player_secret) {
                 return Err(GameError::NotTurnPlayer);
             }
         } else {
@@ -285,10 +220,7 @@ impl GameState {
                     castle = castle.clear_rooms();
                 }
                 game.castles.insert(player_secret.to_string(), castle);
-                if game
-                    .castles
-                    .values()
-                    .all(|c| c.get_damage() == 0 || c.is_lost())
+                if game.castles.values().all(|c| c.damage == 0 || c.is_lost())
                     && game.queued_disasters.len() > 0
                 {
                     let disaster = game.queued_disasters.pop().unwrap();
@@ -329,7 +261,7 @@ impl GameState {
                     .map(|d| Card::Disaster(d))
                     .collect();
                 game.deck.append(&mut card_disasters);
-                game.deck.shuffle(&mut game.rng);
+                game.deck.shuffle(&mut thread_rng());
                 redealt = true;
             }
         }
@@ -354,7 +286,7 @@ impl GameState {
                 let castle = game.castles.get_mut(&secret).unwrap();
                 *castle = castle.deal_damage(diamond, cross, moon);
                 if castle.is_lost() {
-                    for room in castle.get_rooms().values() {
+                    for room in castle.rooms.values() {
                         game.discard.push(room.clone());
                     }
                     *castle = castle.clear_rooms();
@@ -385,9 +317,9 @@ fn compare_game_state(a: &Castle, b: &Castle) -> Ordering {
     } else if a.get_treasure() < b.get_treasure() {
         return Ordering::Less;
     } else {
-        if a.get_rooms().len() > b.get_rooms().len() {
+        if a.rooms.len() > b.rooms.len() {
             return Ordering::Greater;
-        } else if a.get_rooms().len() < b.get_rooms().len() {
+        } else if a.rooms.len() < b.rooms.len() {
             return Ordering::Less;
         } else {
             let (diamond, cross, moon, wild) = a.get_links();
@@ -432,7 +364,7 @@ impl GameState {
         if self.turn_order[self.turn_index] == secret {
             true
         } else if let Some(castle) = self.castles.get(secret) {
-            castle.get_damage() > 0
+            castle.damage > 0
         } else {
             false
         }
