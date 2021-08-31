@@ -140,19 +140,17 @@ impl GameState {
     }
     pub fn possible_actions(&self, player_secret: &str) -> Vec<Action> {
         if let Some(castle) = self.castles.get(player_secret) {
-            if castle.damage != 0 || self.is_turn_player(player_secret) {
+            if self.is_turn_player(player_secret) {
                 return castle.possible_actions(&self.shop);
             }
         }
         return Vec::new();
     }
     pub fn action(&self, player_secret: &str, action: Action) -> Result<GameState> {
-        if let Some(castle) = self.castles.get(player_secret) {
-            if castle.damage == 0 && !self.is_turn_player(player_secret) {
-                return Err(GameError::NotTurnPlayer);
-            }
-        } else {
+        if !self.castles.contains_key(player_secret) {
             return Err(GameError::InvalidPlayer);
+        } else if !self.is_turn_player(player_secret) {
+            return Err(GameError::NotTurnPlayer);
         }
         match action {
             Action::Place(index, pos) => {
@@ -274,8 +272,7 @@ impl GameState {
         let diamond = disaster.diamond_damage(game.previous_disasters.len() as u8);
         let cross = disaster.cross_damage(game.previous_disasters.len() as u8);
         let moon = disaster.moon_damage(game.previous_disasters.len() as u8);
-        for secret in game.turn_order.iter() {
-            let castle = game.castles.get_mut(secret).unwrap();
+        for castle in game.castles.values_mut() {
             *castle = castle.deal_damage(diamond, cross, moon);
         }
         game.sweep_lost_castles();
@@ -338,13 +335,18 @@ impl GameState {
         self.castles.contains_key(secret)
     }
     pub fn is_turn_player(&self, secret: &str) -> bool {
-        if self.turn_order.len() > 0 && self.turn_order[self.turn_index] == secret {
-            true
-        } else if let Some(castle) = self.castles.get(secret) {
-            castle.damage > 0 && !castle.is_lost()
-        } else {
-            false
+        // Check if player need discard
+        if let Some(castle) = self.castles.get(secret) {
+            if castle.damage > 0 && !castle.is_lost() {
+                return true;
+            }
         }
+        // Check if any other player need discard
+        if !self.castles.values().all(|c| c.damage == 0 || c.is_lost()) {
+            return false;
+        }
+        // Check if it is player's turn
+        self.turn_order.len() > 0 && self.turn_order[self.turn_index] == secret
     }
     pub fn get_player_turn_index(&self, secret: &str) -> Option<usize> {
         self.turn_order.iter().position(|s| s == secret)
