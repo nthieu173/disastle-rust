@@ -364,7 +364,7 @@ impl GameState {
         if self.turn_order[self.turn_index] == secret {
             true
         } else if let Some(castle) = self.castles.get(secret) {
-            castle.damage > 0
+            castle.damage > 0 && !castle.is_lost()
         } else {
             false
         }
